@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 1052825950}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: -32.05}
+  m_LocalPosition: {x: 0, y: 15, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -409,10 +409,23 @@ MonoBehaviour:
   SpawnCube: 0
   CubePrefab: {fileID: 8949482699289256689, guid: ebe8cdda443989a4096bc9549250b8b5,
     type: 3}
-  Cubes:
-  - {fileID: 0}
+  Cubes: []
   CubeCount: 0
   CubeLimit: 0
+  cubeModels:
+  - {fileID: 6952720186660516738, guid: c60512ff1467c09408f155fc09d67a16, type: 3}
+  - {fileID: 1120205120406388603, guid: 30df90832546d6847a4897a9638c99a5, type: 3}
+  - {fileID: 8947526073759295578, guid: c3f32c6eb2bbf6e499f4e02c1c9ef5f2, type: 3}
+  - {fileID: 4027299963159541422, guid: e07b890c704ec99499997c1f748ee84f, type: 3}
+  - {fileID: 7168089043476204428, guid: ab112657863daf041b9708c54575ec66, type: 3}
+  - {fileID: 7644321805185380825, guid: 2bbccf4d98f5a614797205ef1be64a5f, type: 3}
+  - {fileID: 3372342431574206530, guid: 28f2e88661fe2cd4d811668d868244c5, type: 3}
+  coordinates:
+  - -3
+  - -1.5
+  - 0
+  - 1.5
+  - 3
 --- !u!4 &1436358870
 Transform:
   m_ObjectHideFlags: 0
@@ -421,13 +434,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436358868}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1774978049
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +468,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774978049}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: fc3cfe66f6f4c3948a3235d1f62aafb3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -542,9 +555,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774978049}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 150
+  m_Drag: 1
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -560,7 +573,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

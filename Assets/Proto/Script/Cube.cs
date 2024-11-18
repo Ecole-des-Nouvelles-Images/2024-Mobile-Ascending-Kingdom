@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,6 +8,7 @@ namespace Proto.Script
     {
         public Rigidbody rb;
         public float speed;
+        public BoxCollider triggerCollider;
         
 
         private void Awake()
@@ -27,10 +29,11 @@ namespace Proto.Script
         {
             if (other.gameObject.CompareTag("Solid"))
             {
+                triggerCollider.enabled = false;
+                rb.AddForce(Vector3.down * speed, ForceMode.Impulse);
                 this.transform.tag = "Solid";
                 rb.useGravity = true;
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY |
-                                  RigidbodyConstraints.FreezePositionZ;
+                rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
                 spawner.CubeCount += 1;
                 spawner.SpawnCube = true;
