@@ -16,6 +16,7 @@ namespace Proto.Script
         public int CubeLimit;
         public List<GameObject> cubeModels = new List<GameObject>();
         public List<float> coordinates = new List<float>();
+        public GameObject cameraObject;
 
         private void Awake()
         {
@@ -31,9 +32,20 @@ namespace Proto.Script
                 {
                     GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, transform.rotation);
                     Cubes.Add(newCube.GetComponent<Cube>());
-                    transform.position = new Vector3(coordinates[Random.Range(0, coordinates.Count)]/*transform.position.x,*/, transform.position.y + 2, transform.position.z);
+                    transform.position = new Vector3(transform.position.x,transform.position.y + 2, transform.position.z);
                 }
                 SpawnCube = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                transform.position += new Vector3(1.5f, 0, 0);
+                cameraObject.transform.position += new Vector3(-1.5f, 0, 0);
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                transform.position += new Vector3(-1.5f, 0, 0);
+                cameraObject.transform.position += new Vector3(1.5f, 0, 0);
             }
 
             /*if (Cubes.Count == CubeLimit)
