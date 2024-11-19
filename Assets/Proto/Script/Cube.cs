@@ -72,7 +72,6 @@ namespace Proto.Script
                 rb.useGravity = true;
                 rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX;
                 transform.SetParent(null);
-                transform.parent = other.gameObject.transform;
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
                 spawner.CubeCount += 1;
                 spawner.SpawnCubeMethod();
