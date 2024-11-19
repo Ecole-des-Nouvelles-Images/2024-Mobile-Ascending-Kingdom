@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,12 +10,17 @@ namespace Proto.Script
         public Rigidbody rb;
         public float speed;
         public BoxCollider triggerCollider;
-        
+        public bool Freeze;
+        private Material mat;
+        private Material tempMaterial;
+        public MeshRenderer meshRenderer;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             rb.useGravity = false;
+            tempMaterial = GetComponent<Renderer>().material;
+            meshRenderer = GetComponent<MeshRenderer>();
         }
 
         private void FixedUpdate()
@@ -25,18 +31,51 @@ namespace Proto.Script
             }
         }
 
+        private void Update()
+        {
+            if (!transform.CompareTag("Solid"))
+            {
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    transform.Translate(Vector3.down * speed * 3 * Time.deltaTime, Space.World);
+                }
+            }
+
+            if (Freeze)
+            {
+                FreezeObject();
+            }
+        }
+
+        private void FreezeObject()
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.useGravity = false;
+            SetShaderBool("_ISFREEZED",true);
+            Freeze = false;
+            
+        }
+        
+        public void SetShaderBool(string propertyName, bool value)
+        {
+           meshRenderer.material.EnableKeyword(propertyName);
+        }
+
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("Solid"))
+            if (other.gameObject.CompareTag("Solid") && !this.gameObject.CompareTag("Solid"))
             {
                 triggerCollider.enabled = false;
-                rb.AddForce(Vector3.down * speed, ForceMode.Impulse);
+                triggerCollider.isTrigger = false;
+                rb.AddForce(Vector3.down * (speed/2), ForceMode.Impulse);
                 this.transform.tag = "Solid";
                 rb.useGravity = true;
-                rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
+                rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX;
+                transform.SetParent(null);
+                transform.parent = other.gameObject.transform;
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
                 spawner.CubeCount += 1;
-                spawner.SpawnCube = true;
+                spawner.SpawnCubeMethod();
             }
         }
     }

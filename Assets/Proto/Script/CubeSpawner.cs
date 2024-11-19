@@ -15,7 +15,8 @@ namespace Proto.Script
         public int CubeCount;
         public int CubeLimit;
         public List<GameObject> cubeModels = new List<GameObject>();
-        public List<float> coordinates = new List<float>();
+        public List<float> rotations = new List<float>();
+        public List<float> rY = new List<float>();
         public GameObject cameraObject;
 
         private void Awake()
@@ -28,62 +29,58 @@ namespace Proto.Script
         {
             if (SpawnCube)
             {
-                if (Cubes[^1].CompareTag("Solid"))
+                if (Cubes.Count > 0 && Cubes[^1].CompareTag("Solid"))
                 {
-                    GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, transform.rotation);
+                    GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],rY[Random.Range(0, rY.Count)],0), this.transform);
+                    newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     Cubes.Add(newCube.GetComponent<Cube>());
-                    transform.position = new Vector3(transform.position.x,transform.position.y + 2, transform.position.z);
+                    transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
                 }
                 SpawnCube = false;
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position += new Vector3(1.5f, 0, 0);
-                cameraObject.transform.position += new Vector3(-1.5f, 0, 0);
+                transform.position += new Vector3(0, 0, 1);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position += new Vector3(-1.5f, 0, 0);
-                cameraObject.transform.position += new Vector3(1.5f, 0, 0);
+                transform.position += new Vector3(0, 0, -1);
             }
 
-            /*if (Cubes.Count == CubeLimit)
+        }
+
+        private void FixedUpdate()
+        {
+            if (CubeCount == CubeLimit)
             {
-                StartCoroutine(FreezeCubes());
-                return;
-            }*/
+                FreezeCubes();
+                
+            }
         }
 
         [ContextMenu("Spawn Cube")]
         public void SpawnCubeMethod()
         {
-            GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, transform.rotation);
+            GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],0,0), this.transform);
+            newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             Cubes.Add(newCube.GetComponent<Cube>());
-            transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
         }
 
-        private IEnumerator FreezeCubes()
+        private void FreezeCubes()
         {
-            if (Cubes.Count <= 0)
+            if (CubeCount == CubeLimit && Cubes.Count != 1)
             {
-                yield break;
-            }
-            else
-            {
-                foreach (Cube cube in Cubes)
+                for (int i = Cubes.Count - 1; i >= 0; i--)
                 {
-                    cube.rb.useGravity = false;
-                    Cubes.Remove(cube);
-                    if (Cubes.Count <= 0)
-                    {
-                        CubeCount = 0;
-                        CubeLimit += 5;
-                        cube.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-                        SpawnCubeMethod();
-                    }
+                    Cube cube = Cubes[i];
+                    cube.Freeze = true;
+                    Debug.Log(cube.name + " is freezed");
+                    CubeCount -= 1;
+                    Cubes.RemoveAt(i);
                 }
-                
+                CubeLimit += 5;
             }
         }
     }
