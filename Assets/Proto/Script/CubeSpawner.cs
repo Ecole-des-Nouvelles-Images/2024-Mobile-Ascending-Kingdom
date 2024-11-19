@@ -34,6 +34,7 @@ namespace Proto.Script
                     GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],rY[Random.Range(0, rY.Count)],0), this.transform);
                     newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     Cubes.Add(newCube.GetComponent<Cube>());
+                    newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
                     transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
                 }
                 SpawnCube = false;
@@ -55,7 +56,6 @@ namespace Proto.Script
             if (CubeCount == CubeLimit)
             {
                 FreezeCubes();
-                
             }
         }
 
@@ -65,11 +65,13 @@ namespace Proto.Script
             GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],0,0), this.transform);
             newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             Cubes.Add(newCube.GetComponent<Cube>());
+            newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
         }
 
         private void FreezeCubes()
         {
+            SpawnCube = false;
             if (CubeCount == CubeLimit && Cubes.Count != 1)
             {
                 for (int i = Cubes.Count - 1; i >= 0; i--)
@@ -82,6 +84,7 @@ namespace Proto.Script
                 }
                 CubeLimit += 5;
             }
+            
         }
     }
 }
