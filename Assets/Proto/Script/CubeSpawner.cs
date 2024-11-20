@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -82,7 +83,6 @@ namespace Proto.Script
                     CubeCount -= 1;
                     Cubes.RemoveAt(i);
                 }
-                CubeLimit += 5;
             }
             
         }

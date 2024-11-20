@@ -22,8 +22,8 @@ namespace PreProdElias.Scripts
 
         private void OnTriggerStay(Collider other)
         {
-            if (!Up)
-            {
+            /*if (!Up)
+            {*/
                 if (other.CompareTag("Solid"))
                 {
                     Vector3 transformPosition = transform.parent.position;
@@ -32,7 +32,7 @@ namespace PreProdElias.Scripts
                     cubeSpawnTransform.position = new Vector3(cubeSpawnPosition.x, cubeSpawnPosition.y +1f, cubeSpawnPosition.z);
                     Up = true;
                 }
-            }
+            //}
             
         }
 
@@ -41,7 +41,6 @@ namespace PreProdElias.Scripts
             if (other.CompareTag("Solid"))
             {
                 Up = false;
-
             }
         }
     }
