@@ -1,9 +1,6 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace PreProdElias.Scripts
+namespace PreProdElias.Scripts.Camera
 {
     
     public class CameraController : MonoBehaviour
@@ -27,9 +24,9 @@ namespace PreProdElias.Scripts
                 if (other.CompareTag("Solid"))
                 {
                     Vector3 transformPosition = transform.parent.position;
-                    transform.parent.position = new Vector3(transformPosition.x, transformPosition.y +1f, transformPosition.z);
+                    transform.parent.position = new Vector3(transformPosition.x, transformPosition.y +2f, transformPosition.z);
                     Vector3 cubeSpawnPosition = cubeSpawnTransform.position;
-                    cubeSpawnTransform.position = new Vector3(cubeSpawnPosition.x, cubeSpawnPosition.y +1f, cubeSpawnPosition.z);
+                    cubeSpawnTransform.position = new Vector3(cubeSpawnPosition.x, cubeSpawnPosition.y +2f, cubeSpawnPosition.z);
                     Up = true;
                 }
             }
