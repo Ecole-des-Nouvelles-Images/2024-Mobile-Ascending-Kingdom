@@ -116,8 +116,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 421939855164874116}
   serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 1
+  m_Mass: 5
+  m_Drag: 5
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -151,6 +151,7 @@ MonoBehaviour:
   speed: 5
   triggerCollider: {fileID: 8138036890364230747}
   Freeze: 0
+  meshRenderer: {fileID: 0}
 --- !u!65 &8138036890364230747
 BoxCollider:
   m_ObjectHideFlags: 0

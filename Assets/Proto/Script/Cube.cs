@@ -51,9 +51,12 @@ namespace Proto.Script
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             rb.useGravity = false;
-            SetShaderBool("_ISFREEZED",true);
+            if (transform.parent == null)
+            {
+                SetShaderBool("_ISFREEZED",true);
+                Freeze = false;
+            }
             Freeze = false;
-            
         }
         
         public void SetShaderBool(string propertyName, bool value)
@@ -67,9 +70,11 @@ namespace Proto.Script
             {
                 triggerCollider.enabled = false;
                 triggerCollider.isTrigger = false;
-                rb.AddForce(Vector3.down * (speed/2), ForceMode.Impulse);
+                rb.AddForce(Vector3.down * speed/2 * Time.deltaTime, ForceMode.VelocityChange);
+                rb.velocity = Vector3.zero;
                 this.transform.tag = "Solid";
                 rb.useGravity = true;
+                rb.velocity = Vector3.zero;
                 rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX;
                 transform.SetParent(null);
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
