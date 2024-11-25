@@ -27,7 +27,7 @@ namespace Elias.Scripts.Camera
         {
             if (!CameraHeightCheck.TowerLowerDetection)
             {
-                MoveObjects(-0.2f);
+                MoveObjects(-1f);
             }
         }
 
@@ -35,7 +35,7 @@ namespace Elias.Scripts.Camera
         {
             if (!_up && other.CompareTag("Solid"))
             {
-                MoveObjects(2f);
+                MoveObjects(3f);
                 _up = true;
             }
         }
