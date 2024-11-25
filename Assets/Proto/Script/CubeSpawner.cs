@@ -21,10 +21,20 @@ namespace Proto.Script
         public GameObject cameraObject;
         public Cube lastCube;
 
+        public bool AutoStart;
+
         private void Awake()
         {
             CubeCount = 0;
             CubeLimit = 5;
+        }
+
+        private void Start()
+        {
+            if (AutoStart)
+            {
+                SpawnCubeMethod();
+            }
         }
 
         private void Update()

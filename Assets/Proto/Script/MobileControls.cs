@@ -14,6 +14,13 @@ public class MobileControls : MonoBehaviour
     private float lastZPosition;
     public float slideSpeed = 5.0f; // Vitesse de glissement
 
+    private float tapTimeWindow = 0.3f; // Fenêtre de temps pour détecter un double tap
+    private float lastTapTime = 0f;
+    private int tapCount = 0;
+
+    public float minSlideDistance = -100.0f; // Distance minimale de glissement
+    public float maxSlideDistance = 100.0f; // Distance maximale de glissement
+
     void Start()
     {
         // Initialiser lastZPosition à 0 au début
@@ -33,6 +40,7 @@ public class MobileControls : MonoBehaviour
                     isSwiping = true;
                     isSliding = true;
                     slideStartX = touch.position.x;
+                    CheckDoubleTap(touch); // Vérifier le double tap lorsque la touche commence
                     break;
 
                 case TouchPhase.Moved:
@@ -56,7 +64,6 @@ public class MobileControls : MonoBehaviour
                     {
                         isSliding = false;
                     }
-                    CheckTap(touch);
                     break;
             }
         }
@@ -64,11 +71,12 @@ public class MobileControls : MonoBehaviour
 
     void CheckSwipe()
     {
-        if (currentTouchPosition.y < startTouchPosition.y - 300) // Threshold a ajuster
+        if (currentTouchPosition.y < startTouchPosition.y - 500) // Threshold a ajuster
         {
             Debug.Log("Swipe Down Detected");
             SwipeDownMethod();
             isSwiping = false;
+            isSliding = false;
         }
         else
         {
@@ -76,35 +84,40 @@ public class MobileControls : MonoBehaviour
             {
                 cubeSpawner.lastCube.goDown = false;
             }
+            isSliding = true;
         }
     }
 
     void CheckSlide()
     {
         float slideEndX = currentTouchPosition.x;
-        float slideDistance = slideEndX - slideStartX;
-        Debug.Log("Slide Distance: " + slideDistance);
+        Debug.Log("Slide X Position: " + slideEndX);
 
-        // Définissez la distance maximale de glissement
-        float maxSlideDistance = 100.0f; // Vous pouvez ajuster cette valeur selon vos besoins
-
-        // Appliquez le facteur de sensibilité à la distance de glissement
-        float adjustedSlideDistance = slideDistance * sensitivityFactor;
-
-        // Normalisez la distance de glissement ajustée
-        float normalizedSlideValue = Mathf.Clamp(adjustedSlideDistance / maxSlideDistance, -1, 1);
+        // Utilisez la position X du doigt pour déterminer la position Z de l'objet
+        float newZPosition = Mathf.Round(slideEndX / Screen.width * (maxSlideDistance - minSlideDistance) + minSlideDistance);
 
         // Utilisez la valeur normalisée pour déplacer l'objet
-        SlideMethod(normalizedSlideValue);
+        SlideMethod(newZPosition);
     }
 
-    void CheckTap(Touch touch)
+    void CheckDoubleTap(Touch touch)
     {
-        if (touch.tapCount == 1)
+        float currentTime = Time.time;
+        if (currentTime - lastTapTime < tapTimeWindow)
         {
-            Debug.Log("Tap Detected");
-            TapMethod();
+            tapCount++;
+            if (tapCount == 2)
+            {
+                Debug.Log("Double Tap Detected");
+                TapMethod();
+                tapCount = 0; // Réinitialiser le compteur de taps
+            }
         }
+        else
+        {
+            tapCount = 1; // Réinitialiser le compteur de taps si le temps écoulé est trop long
+        }
+        lastTapTime = currentTime;
     }
 
     void SwipeDownMethod()
@@ -113,13 +126,10 @@ public class MobileControls : MonoBehaviour
         Debug.Log("Swipe Down Method Executed");
     }
 
-    void SlideMethod(float normalizedSlideValue)
+    void SlideMethod(float newZPosition)
     {
-        // Calculer la nouvelle position Z en fonction de la valeur normalisée
-        float newZPosition = lastZPosition + normalizedSlideValue * slideSpeed * Time.deltaTime;
-
-        // Clamper le déplacement à des intervalles de 0.5
-        newZPosition = Mathf.Round(newZPosition * 2) / 2;
+        // Clamper le déplacement à des intervalles de 1
+        newZPosition = Mathf.Round(newZPosition);
 
         // Limiter la position Z entre -7 et 7
         newZPosition = Mathf.Clamp(newZPosition, -7, 7);
@@ -133,7 +143,14 @@ public class MobileControls : MonoBehaviour
 
     void TapMethod()
     {
-        // TAP METHOD
+        if (!cubeSpawner.lastCube.CompareTag("Solid"))
+        {
+            Transform cubeTransform = cubeSpawner.lastCube.transform;
+            // Créer une rotation de 90 degrés autour de l'axe X
+            Quaternion rotation = Quaternion.Euler(90, 0, 0);
+            // Appliquer la rotation à l'objet
+            cubeTransform.rotation *= rotation;
+        }
         Debug.Log("Tap Method Executed");
     }
 }
