@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PreProdElias.Scripts.Cards
+namespace Elias.Scripts.Cards
 {
     public class CardManager : MonoBehaviour
     {

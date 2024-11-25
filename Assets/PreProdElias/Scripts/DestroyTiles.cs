@@ -1,8 +1,7 @@
-using System;
 using Proto.Script;
 using UnityEngine;
 
-namespace PreProdElias.Scripts
+namespace Elias.Scripts
 {
     public class DestroyTiles : MonoBehaviour
     {
