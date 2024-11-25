@@ -1,7 +1,8 @@
 using Cinemachine;
+using PreProdElias.Scripts.Camera;
 using UnityEngine;
 
-namespace PreProdElias.Scripts.Camera
+namespace Elias.Scripts.Camera
 {
     public class CameraController : MonoBehaviour
     {
