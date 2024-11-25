@@ -19,6 +19,7 @@ namespace Proto.Script
         public List<float> rotations = new List<float>();
         public List<float> rY = new List<float>();
         public GameObject cameraObject;
+        public Cube lastCube;
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace Proto.Script
                 if (Cubes.Count > 0 && Cubes[^1].CompareTag("Solid"))
                 {
                     GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],rY[Random.Range(0, rY.Count)],0), this.transform);
+                    lastCube = newCube.GetComponent<Cube>();
                     newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                     Cubes.Add(newCube.GetComponent<Cube>());
                     newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
@@ -41,15 +43,18 @@ namespace Proto.Script
                 SpawnCube = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                transform.position += new Vector3(0, 0, 1);
-            }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                transform.position += new Vector3(0, 0, -1);
-            }
+            
 
+        }
+
+        public void GoRight()
+        {
+            transform.position += new Vector3(0, 0, 1);
+        }
+
+        public void GoLeft()
+        {
+            transform.position -= new Vector3(0, 0, 1);
         }
 
         private void FixedUpdate()
@@ -64,6 +69,7 @@ namespace Proto.Script
         public void SpawnCubeMethod()
         {
             GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],0,0), this.transform);
+            lastCube = newCube.GetComponent<Cube>();
             newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             Cubes.Add(newCube.GetComponent<Cube>());
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");

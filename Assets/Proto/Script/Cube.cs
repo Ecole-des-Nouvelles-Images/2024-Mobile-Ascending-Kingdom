@@ -14,6 +14,7 @@ namespace Proto.Script
         private Material mat;
         private Material tempMaterial;
         public MeshRenderer meshRenderer;
+        public bool goDown;
 
         private void Awake()
         {
@@ -35,7 +36,7 @@ namespace Proto.Script
         {
             if (!transform.CompareTag("Solid"))
             {
-                if (Input.GetKey(KeyCode.DownArrow))
+                if (goDown)
                 {
                     transform.Translate(Vector3.down * speed * 3 * Time.deltaTime, Space.World);
                 }

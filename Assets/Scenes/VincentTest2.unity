@@ -789,8 +789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed510c995177e44ca41556dc812cf39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSpawn: {fileID: 1436358868}
-  treshold: {fileID: 607981935}
+  CubeSpawn: {fileID: 0}
+  TargetGroup: {fileID: 0}
+  CameraHeightCheck: {fileID: 0}
 --- !u!1 &631792975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1303807649
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1449,7 +1450,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 10.01}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
