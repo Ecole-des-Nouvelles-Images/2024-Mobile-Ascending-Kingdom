@@ -82,7 +82,7 @@ public class MobileControls : MonoBehaviour
         {
             if (cubeSpawner.lastCube != null)
             {
-                cubeSpawner.lastCube.goDown = false;
+                cubeSpawner.lastCube.GoDown = false;
             }
             isSliding = true;
         }
@@ -122,7 +122,7 @@ public class MobileControls : MonoBehaviour
 
     void SwipeDownMethod()
     {
-        cubeSpawner.lastCube.goDown = true;
+        cubeSpawner.lastCube.GoDown = true;
         Debug.Log("Swipe Down Method Executed");
     }
 

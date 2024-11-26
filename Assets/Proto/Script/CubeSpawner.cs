@@ -12,14 +12,14 @@ namespace Proto.Script
     {
         public bool SpawnCube;
         public GameObject CubePrefab;
-        public List<Cube> Cubes = new List<Cube>();
+        public List<Bloc> Cubes = new List<Bloc>();
         public int CubeCount;
         public int CubeLimit;
         public List<GameObject> cubeModels = new List<GameObject>();
         public List<float> rotations = new List<float>();
         public List<float> rY = new List<float>();
         public GameObject cameraObject;
-        public Cube lastCube;
+        public Bloc lastCube;
 
         public bool AutoStart;
 
@@ -44,9 +44,9 @@ namespace Proto.Script
                 if (Cubes.Count > 0 && Cubes[^1].CompareTag("Solid"))
                 {
                     GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],rY[Random.Range(0, rY.Count)],0), this.transform);
-                    lastCube = newCube.GetComponent<Cube>();
+                    lastCube = newCube.GetComponent<Bloc>();
                     newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-                    Cubes.Add(newCube.GetComponent<Cube>());
+                    Cubes.Add(newCube.GetComponent<Bloc>());
                     newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
                     transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
                 }
@@ -79,9 +79,9 @@ namespace Proto.Script
         public void SpawnCubeMethod()
         {
             GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],0,0), this.transform);
-            lastCube = newCube.GetComponent<Cube>();
+            lastCube = newCube.GetComponent<Bloc>();
             newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            Cubes.Add(newCube.GetComponent<Cube>());
+            Cubes.Add(newCube.GetComponent<Bloc>());
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
         }
@@ -93,7 +93,7 @@ namespace Proto.Script
             {
                 for (int i = Cubes.Count - 1; i >= 0; i--)
                 {
-                    Cube cube = Cubes[i];
+                    Bloc cube = Cubes[i];
                     cube.Freeze = true;
                     Debug.Log(cube.name + " is freezed");
                     CubeCount -= 1;

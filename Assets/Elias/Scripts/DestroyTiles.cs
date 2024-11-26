@@ -19,7 +19,7 @@ namespace PreProdElias.Scripts
             {
                 _cubeSpawner.CubeCount -= 1;
             }
-            _cubeSpawner.Cubes.Remove(other.GetComponent<Cube>());
+            _cubeSpawner.Cubes.Remove(other.GetComponent<Bloc>());
             Destroy(other.gameObject);
             _cubeSpawner.SpawnCube = true;
         }
