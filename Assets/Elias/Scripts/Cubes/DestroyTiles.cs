@@ -1,7 +1,8 @@
+using Elias.Scripts.Managers;
 using Proto.Script;
 using UnityEngine;
 
-namespace Elias.Scripts
+namespace Elias.Scripts.Cubes
 {
     public class DestroyTiles : MonoBehaviour
     {
@@ -14,13 +15,15 @@ namespace Elias.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_cubeSpawner.CubeCount !=0)
+            Cube cube = other.GetComponent<Cube>();
+            if (cube != null)
             {
-                _cubeSpawner.CubeCount -= 1;
+                GameManager.Instance.RemoveBloc(cube);
+
+                Destroy(other.gameObject);
+
+                _cubeSpawner.SpawnCube = true;
             }
-            _cubeSpawner.Cubes.Remove(other.GetComponent<Cube>());
-            Destroy(other.gameObject);
-            _cubeSpawner.SpawnCube = true;
         }
     }
 }

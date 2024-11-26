@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using Elias.Scripts.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +9,6 @@ namespace Proto.Script
     {
         public bool SpawnCube;
         public GameObject CubePrefab;
-        public List<Cube> Cubes = new List<Cube>();
         public int CubeCount;
         public int CubeLimit;
         public List<GameObject> cubeModels = new List<GameObject>();
@@ -20,41 +16,70 @@ namespace Proto.Script
         public List<float> rY = new List<float>();
         public GameObject cameraObject;
         public Cube lastCube;
+        public float moveSpeed = 2f; // Speed for smooth following
+
+        private Transform _transform;
+        private Vector3 _targetPosition;
 
         private void Awake()
         {
             CubeCount = 0;
             CubeLimit = 5;
+            _transform = transform;
+            _targetPosition = _transform.position;
         }
 
         private void Update()
         {
             if (SpawnCube)
             {
-                if (Cubes.Count > 0 && Cubes[^1].CompareTag("Solid"))
+                if (CubeCount > 0 && GameManager.Instance.GetBlocCount() > 0 &&
+                    GameManager.Instance.GetBlocCount() % CubeLimit == 0)
                 {
-                    GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],rY[Random.Range(0, rY.Count)],0), this.transform);
-                    lastCube = newCube.GetComponent<Cube>();
-                    newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-                    Cubes.Add(newCube.GetComponent<Cube>());
-                    newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
-                    transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
+                    SpawnNewCube();
                 }
                 SpawnCube = false;
             }
 
-            
-
+            // Smoothly follow the target position
+            _transform.position = Vector3.Lerp(_transform.position, _targetPosition, Time.deltaTime * moveSpeed);
         }
 
         public void GoRight()
         {
-            transform.position += new Vector3(0, 0, 1);
+            _targetPosition += new Vector3(0, 0, 1);
         }
 
         public void GoLeft()
         {
-            transform.position -= new Vector3(0, 0, 1);
+            _targetPosition -= new Vector3(0, 0, 1);
+        }
+
+        [ContextMenu("Spawn Cube")]
+        public void SpawnCubeMethod()
+        {
+            SpawnNewCube();
+        }
+
+        private void SpawnNewCube()
+        {
+            GameObject newCube = Instantiate(
+                cubeModels[Random.Range(0, cubeModels.Count)],
+                _transform.position,
+                Quaternion.Euler(rotations[Random.Range(0, rotations.Count)], rY[Random.Range(0, rY.Count)], 0),
+                this.transform);
+
+            lastCube = newCube.GetComponent<Cube>();
+            newCube.GetComponent<MeshRenderer>().material.color = new Color(
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f));
+
+            // Register the new cube with the GameManager
+            GameManager.Instance.AddBloc(lastCube);
+
+            newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
+            CubeCount++;
         }
 
         private void FixedUpdate()
@@ -65,32 +90,24 @@ namespace Proto.Script
             }
         }
 
-        [ContextMenu("Spawn Cube")]
-        public void SpawnCubeMethod()
-        {
-            GameObject newCube = Instantiate(cubeModels[Random.Range(0,cubeModels.Count)], transform.position, Quaternion.Euler(rotations[Random.Range(0,rotations.Count)],0,0), this.transform);
-            lastCube = newCube.GetComponent<Cube>();
-            newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            Cubes.Add(newCube.GetComponent<Cube>());
-            newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
-            transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
-        }
-
         private void FreezeCubes()
         {
             SpawnCube = false;
-            if (CubeCount == CubeLimit && Cubes.Count != 1)
+            if (CubeCount == CubeLimit)
             {
-                for (int i = Cubes.Count - 1; i >= 0; i--)
+                var cubesToFreeze = GameManager.Instance.GetBlocCount();
+
+                for (int i = cubesToFreeze - 1; i >= 0; i--)
                 {
-                    Cube cube = Cubes[i];
+                    Cube cube = GameManager.Instance.Blocs[i];
                     cube.Freeze = true;
                     Debug.Log(cube.name + " is freezed");
-                    CubeCount -= 1;
-                    Cubes.RemoveAt(i);
+                    CubeCount--;
+
+                    // Remove the cube from the GameManager's list
+                    GameManager.Instance.RemoveBloc(cube);
                 }
             }
-            
         }
     }
 }

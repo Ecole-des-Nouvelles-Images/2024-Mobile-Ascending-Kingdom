@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Elias.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -78,6 +79,9 @@ namespace Proto.Script
                 rb.velocity = Vector3.zero;
                 rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX;
                 transform.SetParent(null);
+                
+                GameManager.Instance.AddBloc(this);//Elias
+                
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
                 spawner.CubeCount += 1;
                 spawner.SpawnCubeMethod();
