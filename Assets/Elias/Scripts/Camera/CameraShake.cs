@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace PreProdElias.Scripts.Camera
+namespace Elias.Scripts.Camera
 {
     public class CameraShake : MonoBehaviour
     {
