@@ -26,7 +26,7 @@ namespace Proto.Script
         private void Awake()
         {
             CubeCount = 0;
-            CubeLimit = 5;
+            CubeLimit = -1;
         }
 
         private void Start()

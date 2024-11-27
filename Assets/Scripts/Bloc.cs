@@ -26,7 +26,7 @@ public class Bloc : MonoBehaviour
         if (Freeze) FreezeObject();
     }
     private void TranslateDown(float multiplier) {
-        transform.Translate(Vector3.down * _speed * multiplier * Time.deltaTime);
+        transform.Translate(Vector3.down * _speed * multiplier * Time.deltaTime, Space.World);
     }
     private void FreezeObject() {
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
