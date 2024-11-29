@@ -1,69 +1,67 @@
 using Cinemachine;
 using UnityEngine;
+using Elias.Scripts.Managers;
 
 namespace Elias.Scripts.Camera
 {
     public class CameraController : MonoBehaviour
     {
-        public GameObject CubeSpawn;
         public CinemachineTargetGroup TargetGroup;
-        public CameraHeightCheck CameraHeightCheck;
-        public float moveSpeed = 2f; // Speed for smooth following
-
-        private bool _up;
-        private Transform _cubeSpawnTransform;
-        private Vector3 _targetPosition;
+        public float moveSpeed = 2f;
+        private GameObject[] dummyTargets;
 
         private void Start()
         {
-            _cubeSpawnTransform = CubeSpawn.GetComponent<Transform>();
-            _targetPosition = _cubeSpawnTransform.position;
-
-            if (CameraHeightCheck == null)
+            if (TargetGroup == null)
             {
-                Debug.LogError("CameraHeightCheck reference is not assigned!");
+                Debug.LogError("TargetGroup reference is not assigned!");
+            }
+            GameManager.Instance.OnBlocListUpdated += UpdateTargetGroup;
+            dummyTargets = new GameObject[3];
+            for (int i = 0; i < dummyTargets.Length; i++)
+            {
+                dummyTargets[i] = new GameObject("DummyTarget_" + i);
+                dummyTargets[i].transform.position = new Vector3(0f, 0f, 0f);
             }
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if (!CameraHeightCheck.TowerLowerDetection)
+            GameManager.Instance.OnBlocListUpdated -= UpdateTargetGroup;
+            foreach (var dummy in dummyTargets)
             {
-                MoveObjects(-1f);
-            }
-
-            // Smoothly follow the target position
-            _cubeSpawnTransform.position = Vector3.Lerp(_cubeSpawnTransform.position, _targetPosition, Time.deltaTime * moveSpeed);
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (!_up && other.CompareTag("Solid"))
-            {
-                MoveObjects(3f);
-                _up = true;
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Solid"))
-            {
-                _up = false;
-            }
-        }
-
-        private void MoveObjects(float offsetY)
-        {
-            _targetPosition = new Vector3(_cubeSpawnTransform.position.x, _cubeSpawnTransform.position.y + offsetY, _cubeSpawnTransform.position.z);
-
-            foreach (var target in TargetGroup.m_Targets)
-            {
-                if (target.target != null)
+                if (dummy != null)
                 {
-                    Vector3 targetPosition = target.target.position;
-                    target.target.position = new Vector3(targetPosition.x, targetPosition.y + offsetY, targetPosition.z);
+                    Destroy(dummy);
                 }
+            }
+        }
+
+        private void UpdateTargetGroup()
+        {
+            ClearTargetGroup();
+
+            var blocs = GameManager.Instance.Blocs.FindAll(bloc => bloc != null);
+
+            blocs.Sort((a, b) => b.transform.position.y.CompareTo(a.transform.position.y));
+
+            int count = Mathf.Min(3, blocs.Count);
+            for (int i = 0; i < count; i++)
+            {
+                var bloc = blocs[i];
+                if (bloc != null && bloc.CompareTag("Solid"))
+                {
+                    dummyTargets[i].transform.position = new Vector3(0f, bloc.transform.position.y, 0f);
+                    TargetGroup.AddMember(dummyTargets[i].transform, 1f, 0f);
+                }
+            }
+        }
+
+        private void ClearTargetGroup()
+        {
+            while (TargetGroup.m_Targets.Length > 0)
+            {
+                TargetGroup.RemoveMember(TargetGroup.m_Targets[0].target);
             }
         }
     }

@@ -15,10 +15,10 @@ namespace Elias.Scripts.Cubes
 
         private void OnTriggerEnter(Collider other)
         {
-            Cube cube = other.GetComponent<Cube>();
-            if (cube != null)
+            Bloc piece = other.GetComponent<Bloc>();
+            if (piece != null)
             {
-                GameManager.Instance.RemoveBloc(cube);
+                GameManager.Instance.RemoveBloc(piece);
 
                 Destroy(other.gameObject);
 
