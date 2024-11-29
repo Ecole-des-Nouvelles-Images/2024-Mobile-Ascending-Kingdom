@@ -107,7 +107,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.0000002, y: 1.99, z: 0.99}
-  m_Center: {x: 0, y: 0.69, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!65 &3480212101116480346
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -128,7 +128,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.0000002, y: 1.99, z: 0.99}
-  m_Center: {x: 0, y: -0.31, z: -1}
+  m_Center: {x: 0, y: -0.5, z: -1}
 --- !u!54 &5179404398976383492
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -137,9 +137,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8103926214036590991}
   serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 2
-  m_AngularDrag: 1
+  m_Mass: 1
+  m_Drag: 4
+  m_AngularDrag: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

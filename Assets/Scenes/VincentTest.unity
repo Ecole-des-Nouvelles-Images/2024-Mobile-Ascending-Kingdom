@@ -514,6 +514,8 @@ MonoBehaviour:
   - 0
   - 180
   cameraObject: {fileID: 1052825950}
+  lastCube: {fileID: 0}
+  AutoStart: 0
 --- !u!4 &1436358870
 Transform:
   m_ObjectHideFlags: 0

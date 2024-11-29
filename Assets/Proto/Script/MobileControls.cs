@@ -150,6 +150,10 @@ public class MobileControls : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(90, 0, 0);
             // Appliquer la rotation à l'objet
             cubeTransform.rotation *= rotation;
+            Bounds bounds = cubeTransform.GetComponent<MeshRenderer>().bounds;
+            float lengthZ = bounds.size.z;
+            cubeSpawner.Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
+            cubeSpawner.Indicator.transform.localPosition = new Vector3(cubeTransform.localPosition.x, 0, 0);
         }
         Debug.Log("Tap Method Executed");
     }
