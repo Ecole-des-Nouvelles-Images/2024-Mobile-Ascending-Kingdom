@@ -7,48 +7,48 @@ namespace Elias.Scripts.Cards
     public class CardManager : MonoBehaviour
     {
         public GameObject CardSelectionPanel;
-        public List<Button> CardButtons;
-        public Text[] CardTexts;
+        public GameObject CardPrefab; // Prefab for displaying card information
+        public Transform CardContainer; // Container for holding card UI elements
 
         public int MaxDeckSize = 3;
-        private List<string> _playerDeck = new List<string>();
-        private List<string> _currentChoices = new List<string>();
+        private List<CardSO> _playerDeck = new List<CardSO>();
+        private List<CardSO> _currentChoices = new List<CardSO>();
 
         private void Start()
         {
             CardSelectionPanel.SetActive(false);
         }
 
-        public void OpenCardSelection(List<string> availableCards)
+        public void OpenCardSelection(List<CardSO> availableCards)
         {
             _currentChoices.Clear();
-            for (int i = 0; i < CardButtons.Count; i++)
+            foreach (Transform child in CardContainer)
             {
-                if (i < availableCards.Count)
-                {
-                    _currentChoices.Add(availableCards[i]);
-                    CardTexts[i].text = availableCards[i];
-                    CardButtons[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    CardButtons[i].gameObject.SetActive(false);
-                }
+                Destroy(child.gameObject);
+            }
+
+            for (int i = 0; i < availableCards.Count; i++)
+            {
+                _currentChoices.Add(availableCards[i]);
+                GameObject cardUI = Instantiate(CardPrefab, CardContainer);
+                cardUI.GetComponentInChildren<Text>().text = availableCards[i].cardName;
+                cardUI.GetComponent<Button>().onClick.AddListener(() => SelectCard(i));
             }
 
             CardSelectionPanel.SetActive(true);
         }
+
         public void SelectCard(int cardIndex)
         {
             if (cardIndex < 0 || cardIndex >= _currentChoices.Count) return;
 
-            string chosenCard = _currentChoices[cardIndex];
-            Debug.Log($"Player chose: {chosenCard}");
+            CardSO chosenCard = _currentChoices[cardIndex];
+            Debug.Log($"Player chose: {chosenCard.cardName}");
 
             if (_playerDeck.Count < MaxDeckSize)
             {
                 _playerDeck.Add(chosenCard);
-                Debug.Log($"Card added to deck: {chosenCard}. Current deck: {string.Join(", ", _playerDeck)}");
+                Debug.Log($"Card added to deck: {chosenCard.cardName}. Current deck: {string.Join(", ", _playerDeck)}");
             }
             else
             {
@@ -60,9 +60,10 @@ namespace Elias.Scripts.Cards
             ApplyCardEffect(chosenCard);
         }
 
-        private void ApplyCardEffect(string card)
+        private void ApplyCardEffect(CardSO card)
         {
-            Debug.Log($"Applying effect for card: {card}");
+            Debug.Log($"Applying effect for card: {card.cardName}");
+            card.TriggerEvent();
         }
     }
 }

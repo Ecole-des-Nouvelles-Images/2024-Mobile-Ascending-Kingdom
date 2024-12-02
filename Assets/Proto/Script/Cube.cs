@@ -80,8 +80,6 @@ namespace Proto.Script
                 rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX;
                 transform.SetParent(null);
                 
-                GameManager.Instance.AddBloc(this);//Elias
-                
                 CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
                 spawner.CubeCount += 1;
                 spawner.SpawnCubeMethod();

@@ -18,26 +18,32 @@ public class Bloc : MonoBehaviour
         _rigidbody.useGravity = false;
         _meshRenderer = GetComponent<MeshRenderer>();
     }
+    
     private void FixedUpdate() {
         if (!transform.CompareTag("Solid")) TranslateDown(1);
         
     }
+    
     private void Update() {
         if (!transform.CompareTag("Solid")) if (GoDown)TranslateDown(3);
         if (Freeze) FreezeObject();
     }
+    
     private void TranslateDown(float multiplier) {
         transform.Translate(Vector3.down * _speed * multiplier * Time.deltaTime, Space.World);
     }
+    
     private void FreezeObject() {
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _rigidbody.useGravity = false;
         SetShaderBool("_ISFREEZED");
         Freeze = false;
     }
+    
     private void SetShaderBool(string propertyName) {
         _meshRenderer.material.EnableKeyword(propertyName);
     }
+    
     private void OnCollisionEnter(Collision other) {
         if (!other.gameObject.CompareTag("Solid") || gameObject.CompareTag("Solid")) return;
         Debug.Log(gameObject.name + " collided with " + other.gameObject.name);
