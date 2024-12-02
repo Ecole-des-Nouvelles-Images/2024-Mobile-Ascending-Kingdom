@@ -44,7 +44,7 @@ namespace Proto.Script
             {
                 if (GameManager.Instance.GetBlocCount() > 0 && GameManager.Instance.Blocs[^1].CompareTag("Solid"))
                 {
-                    GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity);
+                    GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
 
                     lastCube = newCube.GetComponent<Bloc>();
                     newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f),
@@ -80,16 +80,16 @@ namespace Proto.Script
 
         private void FixedUpdate()
         {
-            if (CubeCount == CubeLimit)
+            /*if (CubeCount == CubeLimit)
             {
                 FreezeCubes();
-            }
+            }*/
         }
 
         [ContextMenu("Spawn Cube")]
         public void SpawnCubeMethod()
         {
-            GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity);
+            GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
             lastCube = newCube.GetComponent<Bloc>();
             newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             GameManager.Instance.AddBloc(newCube.GetComponent<Bloc>());
@@ -104,16 +104,12 @@ namespace Proto.Script
         public void FreezeCubes()
         {
             SpawnCube = false;
-            if (CubeCount == CubeLimit && GameManager.Instance.GetBlocCount() != 1)
+            foreach (Bloc cube in GameManager.Instance.Blocs)
             {
-                for (int i = GameManager.Instance.GetBlocCount() - 1; i >= 0; i--)
-                {
-                    Bloc cube = GameManager.Instance.Blocs[i];
-                    cube.Freeze = true;
-                    Debug.Log(cube.name + " is freezed");
-                    CubeCount -= 1;
-                    GameManager.Instance.RemoveBloc(cube);
-                }
+                cube.Freeze = true;
+                Debug.Log(cube.name + " is freezed");
+                //CubeCount -= 1;
+                //GameManager.Instance.RemoveBloc(cube);
             }
         }
 

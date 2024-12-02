@@ -510,7 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc1c5f7fbbe42e4a937f81cfdbc4a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Height: 0
   HeightText: {fileID: 215720264643288681}
 --- !u!114 &423708156
 MonoBehaviour:
@@ -524,7 +523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f824a7c4ff8b6ce44a9955b8f2ff7f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 0
   ScoreText: {fileID: 4817471989815604617}
 --- !u!1 &551562265
 GameObject:
@@ -729,6 +727,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &866583527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866583529}
+  - component: {fileID: 866583528}
+  m_Layer: 0
+  m_Name: EGO_MobileControls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &866583528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866583527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e767ae5a735732448a9237b07f9bda25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeSpawner: {fileID: 1436358869}
+  sensitivityFactor: 1
+  slideSpeed: 1
+  minSlideDistance: -7
+  maxSlideDistance: 7
+--- !u!4 &866583529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866583527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1007763851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,8 +1054,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc33eba05de37d479dbb76a506b658e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeSpawner: {fileID: 1436358869}
   Blocs:
   - {fileID: 0}
+  Backgrounds: []
 --- !u!1 &1436358868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1486,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.3
+  m_fontSize: 73.55
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1515,7 +1564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &832218660433319930
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1727,7 +1776,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.3
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2067,3 +2116,4 @@ SceneRoots:
   - {fileID: 1774978053}
   - {fileID: 9173658485703543415}
   - {fileID: 2014222429}
+  - {fileID: 866583529}
