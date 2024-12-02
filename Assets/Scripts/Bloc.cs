@@ -19,7 +19,8 @@ public class Bloc : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
     }
     private void FixedUpdate() {
-        if (!transform.CompareTag("Solid")) TranslateDown(1); 
+        if (!transform.CompareTag("Solid")) TranslateDown(1);
+        
     }
     private void Update() {
         if (!transform.CompareTag("Solid")) if (GoDown)TranslateDown(3);
