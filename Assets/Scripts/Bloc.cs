@@ -7,15 +7,15 @@ using UnityEngine.Serialization;
 
 public class Bloc : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidbody;
+    [FormerlySerializedAs("_rigidbody")] public Rigidbody Rigidbody;
     [SerializeField] private float _speed;
     public bool Freeze;
     private MeshRenderer _meshRenderer;
     public bool GoDown;
 
     private void Awake() {
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.useGravity = false;
+        Rigidbody = GetComponent<Rigidbody>();
+        Rigidbody.useGravity = false;
         _meshRenderer = GetComponent<MeshRenderer>();
     }
     
@@ -34,8 +34,8 @@ public class Bloc : MonoBehaviour
     }
     
     private void FreezeObject() {
-        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        _rigidbody.useGravity = false;
+        Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        Rigidbody.useGravity = false;
         SetShaderBool("_ISFREEZED");
         Freeze = false;
     }
@@ -48,11 +48,11 @@ public class Bloc : MonoBehaviour
         if (!other.gameObject.CompareTag("Solid") || gameObject.CompareTag("Solid")) return;
         Debug.Log(gameObject.name + " collided with " + other.gameObject.name);
         //_rigidbody.AddForce(Vector3.down * _speed/2 * Time.deltaTime, ForceMode.VelocityChange);
-        _rigidbody.velocity = Vector3.zero;
+        Rigidbody.velocity = Vector3.zero;
         transform.tag = "Solid";
-        _rigidbody.useGravity = true;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY |
+        Rigidbody.useGravity = true;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY |
                                  RigidbodyConstraints.FreezePositionX;
         transform.SetParent(null);
         CubeSpawner spawner = FindObjectOfType<CubeSpawner>();

@@ -1,30 +1,26 @@
 using Elias.Scripts.Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Elias.Scripts.Scores
 {
     public class ScoreTracking : MonoBehaviour
     {
-        public int Score = 0;
         public TMP_Text ScoreText;
 
         private void OnEnable()
         {
-            GameManager.Instance.OnBlocListUpdated += UpdateScore;
+            GameManager.Instance.OnScoreUpdated += UpdateScoreText;
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.OnBlocListUpdated -= UpdateScore;
+            GameManager.Instance.OnScoreUpdated -= UpdateScoreText;
         }
 
-        private void UpdateScore()
+        private void UpdateScoreText()
         {
-            Score = GameManager.Instance.GetBlocCount();
-            ScoreText.text = "Score: " + Score;
+            ScoreText.text = "Score: " + GameManager.Instance.Score;
         }
     }
 }
-
