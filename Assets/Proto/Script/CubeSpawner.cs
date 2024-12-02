@@ -20,7 +20,7 @@ namespace Proto.Script
         public List<float> rY = new List<float>();
         public GameObject cameraObject;
         public Bloc lastCube;
-        public GameObject Indicator;
+        //public GameObject Indicator;
 
         public bool AutoStart;
 
@@ -54,8 +54,8 @@ namespace Proto.Script
                     newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
                     Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
                     float lengthZ = bounds.size.z;
-                    Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
-                    Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
+                    //Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
+                    //Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
                     transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
                 }
                 SpawnCube = false;
@@ -96,12 +96,12 @@ namespace Proto.Script
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
             float lengthZ = bounds.size.z;
-            Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
-            Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
+            //Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
+            //Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
             transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
         }
 
-        private void FreezeCubes()
+        public void FreezeCubes()
         {
             SpawnCube = false;
             if (CubeCount == CubeLimit && GameManager.Instance.GetBlocCount() != 1)
