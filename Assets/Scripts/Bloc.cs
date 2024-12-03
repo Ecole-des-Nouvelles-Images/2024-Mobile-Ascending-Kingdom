@@ -46,7 +46,7 @@ public class Bloc : MonoBehaviour
     
     private void OnCollisionEnter(Collision other) {
         if (!other.gameObject.CompareTag("Solid") || gameObject.CompareTag("Solid")) return;
-        Debug.Log(gameObject.name + " collided with " + other.gameObject.name);
+//        Debug.Log(gameObject.name + " collided with " + other.gameObject.name);
         //_rigidbody.AddForce(Vector3.down * _speed/2 * Time.deltaTime, ForceMode.VelocityChange);
         Rigidbody.velocity = Vector3.zero;
         transform.tag = "Solid";

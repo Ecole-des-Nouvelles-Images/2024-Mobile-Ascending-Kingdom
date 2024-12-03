@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Elias.Scripts.Cards;
 using Elias.Scripts.Event;
 using Proto.Script;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -23,7 +25,7 @@ namespace Elias.Scripts.Managers
         private int _eventTreshold = 15;
 
         private float _initialHeightTreshold = 10f;
-        private float _initiaScoretreshold = 20f;
+        private float _initiaScoretreshold = 5f;
         private float _initiaPhaseTreshold = 20f;
 
         private float _currentHeightTreshold;
@@ -31,15 +33,17 @@ namespace Elias.Scripts.Managers
         private float _currentPhaseTreshold;
 
         public GameObject cardPanel;
-        private List<CardSO> _activeCards = new List<CardSO>();
-        private List<CardSO> _optionsCards = new List<CardSO>();
+        private List<CardSO> _deckCards = new List<CardSO>();
+        private List<CardSO> _poolCards = new List<CardSO>();
         private List<CardSO> _displayedCards = new List<CardSO>();
         private List<Button> _cardButtons = new List<Button>();
 
-        private EventSO _activeEvent;
+        private List<EventSO> _allEvents;
+        private EventSO _currentEvent;
 
         public List<Sprite> Backgrounds;
-        private Sprite _currentBackground;
+        
+        public Sprite _currentBackground;
 
         public float Height
         {
@@ -69,11 +73,42 @@ namespace Elias.Scripts.Managers
             _currentScoreTreshold = _initiaScoretreshold;
             _currentPhaseTreshold = _initiaPhaseTreshold;
 
-            // Initialize _optionsCards with all available cards
-            _optionsCards = new List<CardSO> { /* Add your cards here */ };
+            // Initialize _poolCards with all available cards
+            _poolCards = new List<CardSO>
+            {
+                ScriptableObject.CreateInstance<Fool>(),
+                ScriptableObject.CreateInstance<World>(),
+                ScriptableObject.CreateInstance<Devil>(),
+                ScriptableObject.CreateInstance<Sun>(),
+                ScriptableObject.CreateInstance<Moon>(),
+                ScriptableObject.CreateInstance<Death>(),
+                ScriptableObject.CreateInstance<Emperor>(),
+                ScriptableObject.CreateInstance<Empress>(),
+                ScriptableObject.CreateInstance<Tower>(),
+                
+            };
+            
+            _allEvents = new List<EventSO>
+            {
+                ScriptableObject.CreateInstance<Wind>(),
+                ScriptableObject.CreateInstance<Volcano>(),
+                ScriptableObject.CreateInstance<Blizzard>(),
+                ScriptableObject.CreateInstance<Wave>(),
+            };
 
             // Initialize _cardButtons with your UI buttons
-            _cardButtons = new List<Button> { /* Add your buttons here */ };
+            _cardButtons = new List<Button>();
+            foreach (Transform child in cardPanel.transform)
+            {
+                Button button = child.GetComponent<Button>();
+                if (button != null)
+                {
+                    _cardButtons.Add(button);
+                }
+            }
+
+            // Hide the card panel initially
+            cardPanel.SetActive(false);
         }
 
         private void Update()
@@ -85,12 +120,12 @@ namespace Elias.Scripts.Managers
 
             if (_height >= _currentPhaseTreshold)
             {
-                PhaseTrigger();
+                //PhaseTrigger();
             }
 
             if (_allBlocCount >= _eventTreshold)
             {
-                EventTrigger(_activeEvent);
+                EventTrigger(_currentEvent);
             }
         }
 
@@ -103,7 +138,7 @@ namespace Elias.Scripts.Managers
             }
 
             Blocs.Add(piece);
-            Debug.Log($"Added Bloc {piece.name} to Blocs list. Total count: {Blocs.Count}");
+//            Debug.Log($"Added Bloc {piece.name} to Blocs list. Total count: {Blocs.Count}");
             UpdateHeightAndScore();
             OnBlocListUpdated?.Invoke();
             _allBlocCount++;
@@ -160,18 +195,21 @@ namespace Elias.Scripts.Managers
             Debug.Log("Card triggered");
 
             _currentHeightTreshold = (_currentHeightTreshold + (_initialHeightTreshold * 1.1f));
-            _currentScoreTreshold *= (_currentScoreTreshold + (_initiaScoretreshold * 1.1f));
+            _currentScoreTreshold = (_currentScoreTreshold + (_initiaScoretreshold * 1.1f));
+            
+            Debug.Log("Current score: " + _currentScoreTreshold);
+            Debug.Log("Current height: " + _currentHeightTreshold);
 
             cardPanel.SetActive(true);
 
             // Pick 3 random cards
             _displayedCards.Clear();
-            for (int i = 0; i < 3 && _optionsCards.Count > 0; i++)
+            for (int i = 0; i < 3 && _poolCards.Count > 0; i++)
             {
-                int randomIndex = UnityEngine.Random.Range(0, _optionsCards.Count);
-                CardSO pickedCard = _optionsCards[randomIndex];
+                int randomIndex = UnityEngine.Random.Range(0, _poolCards.Count);
+                CardSO pickedCard = _poolCards[randomIndex];
                 _displayedCards.Add(pickedCard);
-                _optionsCards.RemoveAt(randomIndex);
+                _poolCards.RemoveAt(randomIndex);
             }
 
             // Update buttons with picked cards
@@ -182,7 +220,17 @@ namespace Elias.Scripts.Managers
                     Button button = _cardButtons[i];
                     CardSO card = _displayedCards[i];
                     button.image.sprite = card.cardImage;
-                    button.GetComponentInChildren<Text>().text = card.cardName;
+
+                    // Get all TMP_Text components in the button's children
+                    TMP_Text[] textComponents = button.GetComponentsInChildren<TMP_Text>();
+
+                    // Assign the card name and description to the appropriate TMP_Text components
+                    if (textComponents.Length >= 2)
+                    {
+                        textComponents[0].text = card.cardName;
+                        textComponents[1].text = card.cardDescription;
+                    }
+
                     button.onClick.RemoveAllListeners();
                     button.onClick.AddListener(() => OnCardButtonClick(button, card));
                     button.gameObject.SetActive(true);
@@ -194,9 +242,10 @@ namespace Elias.Scripts.Managers
             }
         }
 
+
         private void OnCardButtonClick(Button button, CardSO card)
         {
-            _activeCards.Add(card);
+            _deckCards.Add(card);
             card.TriggerEvent();
             _displayedCards.Remove(card);
             button.gameObject.SetActive(false);
@@ -204,7 +253,7 @@ namespace Elias.Scripts.Managers
             // Return the other two cards to the pool
             foreach (var displayedCard in _displayedCards)
             {
-                _optionsCards.Add(displayedCard);
+                _poolCards.Add(displayedCard);
             }
             _displayedCards.Clear();
 
@@ -212,17 +261,17 @@ namespace Elias.Scripts.Managers
             cardPanel.SetActive(false);
         }
 
-        public void EventTrigger(EventSO eventSO)
+        public void EventTrigger(EventSO phaseEvent)
         {
             _eventTreshold += 15;
-            Debug.Log("Event triggered");
+            phaseEvent.TriggerEvent();
         }
 
         public void PhaseTrigger()
         {
             _currentPhaseTreshold = (_currentPhaseTreshold + (_initiaPhaseTreshold * 1.1f));
             _currentHeightTreshold = (_currentPhaseTreshold + (_currentHeightTreshold));
-            _currentScoreTreshold *= (_currentPhaseTreshold + (_currentScoreTreshold));
+            _currentScoreTreshold = (_currentPhaseTreshold + (_currentScoreTreshold));
 
             Debug.Log("new phase treshold" + _currentPhaseTreshold);
 

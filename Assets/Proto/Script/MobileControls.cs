@@ -73,7 +73,7 @@ public class MobileControls : MonoBehaviour
     {
         if (currentTouchPosition.y < startTouchPosition.y - 500) // Threshold a ajuster
         {
-            Debug.Log("Swipe Down Detected");
+//            Debug.Log("Swipe Down Detected");
             SwipeDownMethod();
             isSwiping = false;
             isSliding = false;
@@ -91,7 +91,7 @@ public class MobileControls : MonoBehaviour
     void CheckSlide()
     {
         float slideEndX = currentTouchPosition.x;
-        Debug.Log("Slide X Position: " + slideEndX);
+//        Debug.Log("Slide X Position: " + slideEndX);
 
         // Utilisez la position X du doigt pour déterminer la position Z de l'objet
         float newZPosition = Mathf.Round(slideEndX / Screen.width * (maxSlideDistance - minSlideDistance) + minSlideDistance);
@@ -123,7 +123,7 @@ public class MobileControls : MonoBehaviour
     void SwipeDownMethod()
     {
         cubeSpawner.lastCube.GoDown = true;
-        Debug.Log("Swipe Down Method Executed");
+        //Debug.Log("Swipe Down Method Executed");
     }
 
     void SlideMethod(float newZPosition)
