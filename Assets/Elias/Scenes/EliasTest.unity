@@ -180,7 +180,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &12282369
 Canvas:
   m_ObjectHideFlags: 0
@@ -190,10 +190,10 @@ Canvas:
   m_GameObject: {fileID: 12282366}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 1
   m_Camera: {fileID: 1052825952}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -212,18 +212,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12282366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 445}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 700123972}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1752394112}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 585, y: 1266}
-  m_SizeDelta: {x: 1170, y: 2532}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &28467064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,6 +2436,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1329619670}
   - component: {fileID: 1329619671}
+  - component: {fileID: 1329619673}
+  - component: {fileID: 1329619672}
   m_Layer: 0
   m_Name: EGO_GameManager_00
   m_TagString: Untagged
@@ -2474,7 +2476,36 @@ MonoBehaviour:
   Blocs:
   - {fileID: 0}
   cardPanel: {fileID: 732568516}
-  Backgrounds: []
+  Backgrounds:
+  - {fileID: 21300000, guid: 583b7dd27ddcf6a46bbd42bdd4b0c311, type: 3}
+  - {fileID: 21300000, guid: 5747a7d9133885946be5273bea66069b, type: 3}
+  - {fileID: 21300000, guid: 583b7dd27ddcf6a46bbd42bdd4b0c311, type: 3}
+  - {fileID: 21300000, guid: 5747a7d9133885946be5273bea66069b, type: 3}
+  backgroundObject: {fileID: 700123971}
+--- !u!114 &1329619672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329619669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a119c6f57415b34fbaaaee163436258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1329619673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329619669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5299561182641a439c7da4f96650bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1360504307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,6 +2980,7 @@ Transform:
   - {fileID: 9173658485703543415}
   - {fileID: 780543106}
   - {fileID: 2014222429}
+  - {fileID: 12282370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1774978049
@@ -3938,4 +3970,3 @@ SceneRoots:
   - {fileID: 1774978053}
   - {fileID: 866583529}
   - {fileID: 1752394112}
-  - {fileID: 12282370}
