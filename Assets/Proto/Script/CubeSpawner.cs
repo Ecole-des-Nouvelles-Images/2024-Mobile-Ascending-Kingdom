@@ -44,7 +44,7 @@ namespace Proto.Script
             {
                 if (GameManager.Instance.GetBlocCount() > 0 && GameManager.Instance.Blocs[^1].CompareTag("Solid"))
                 {
-                    GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity);
+                    GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
 
                     lastCube = newCube.GetComponent<Bloc>();
                     newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f),
@@ -89,7 +89,7 @@ namespace Proto.Script
         [ContextMenu("Spawn Cube")]
         public void SpawnCubeMethod()
         {
-            GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity);
+            GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
             lastCube = newCube.GetComponent<Bloc>();
             newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             GameManager.Instance.AddBloc(newCube.GetComponent<Bloc>());
