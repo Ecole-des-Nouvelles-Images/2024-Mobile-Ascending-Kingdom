@@ -80,10 +80,10 @@ namespace Proto.Script
 
         private void FixedUpdate()
         {
-            if (CubeCount == CubeLimit)
+            /*if (CubeCount == CubeLimit)
             {
                 FreezeCubes();
-            }
+            }*/
         }
 
         [ContextMenu("Spawn Cube")]
@@ -104,16 +104,12 @@ namespace Proto.Script
         public void FreezeCubes()
         {
             SpawnCube = false;
-            if (CubeCount == CubeLimit && GameManager.Instance.GetBlocCount() != 1)
+            foreach (Bloc cube in GameManager.Instance.Blocs)
             {
-                for (int i = GameManager.Instance.GetBlocCount() - 1; i >= 0; i--)
-                {
-                    Bloc cube = GameManager.Instance.Blocs[i];
-                    cube.Freeze = true;
-                    Debug.Log(cube.name + " is freezed");
-                    CubeCount -= 1;
-                    GameManager.Instance.RemoveBloc(cube);
-                }
+                cube.Freeze = true;
+                Debug.Log(cube.name + " is freezed");
+                //CubeCount -= 1;
+                //GameManager.Instance.RemoveBloc(cube);
             }
         }
 

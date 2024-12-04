@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Elias.Scripts.Event
 {
-    [CreateAssetMenu(fileName = "BlizzardEvent", menuName = "Events/Blizzard Event")]
-    public class WindEventSO : EventSO
+    [CreateAssetMenu(fileName = "WindEvent", menuName = "Events/Wind Event")]
+    public class Wind : EventSO
     {
         public override void TriggerEvent()
         {
@@ -12,7 +12,7 @@ namespace Elias.Scripts.Event
     }
 
     [CreateAssetMenu(fileName = "VolcanoEvent", menuName = "Events/Volcano Event")]
-    public class VolcanoEventSO : EventSO
+    public class Volcano: EventSO
     {
         public override void TriggerEvent()
         {
@@ -21,7 +21,15 @@ namespace Elias.Scripts.Event
     }
 
     [CreateAssetMenu(fileName = "WaveEvent", menuName = "Events/Wave Event")]
-    public class WaveEventSO : EventSO
+    public class Blizzard : EventSO
+    {
+        public override void TriggerEvent()
+        {
+            Debug.Log("Wave Event Triggered!");
+        }
+    }
+    
+    public class Wave : EventSO
     {
         public override void TriggerEvent()
         {
