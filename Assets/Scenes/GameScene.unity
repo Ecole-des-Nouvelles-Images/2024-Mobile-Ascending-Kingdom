@@ -564,8 +564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnCube: 0
   CubePrefab: {fileID: 0}
-  Cubes:
-  - {fileID: 0}
   CubeCount: 0
   CubeLimit: 0
   cubeModels:
@@ -585,7 +583,6 @@ MonoBehaviour:
   - 270
   cameraObject: {fileID: 2004278810}
   lastCube: {fileID: 0}
-  Indicator: {fileID: 301229595}
   AutoStart: 1
 --- !u!114 &1128565146
 MonoBehaviour:
@@ -601,7 +598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeSpawner: {fileID: 1128565145}
   sensitivityFactor: 1
-  slideSpeed: 1
+  slideSpeed: 0.25
   minSlideDistance: -7
   maxSlideDistance: 7
 --- !u!1 &2004278810
