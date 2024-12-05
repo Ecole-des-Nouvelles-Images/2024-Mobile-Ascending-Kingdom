@@ -6,8 +6,10 @@ namespace Elias.Scripts.Event
     public class EventSO : ScriptableObject
     {
         public AudioClip eventSound;
-        //public GameObject eventEffectPrefab; SHADER ???
+        public ParticleSystem particleSystem;
+        public Shader shader;
         public int eventBlockDuration;
+        public bool EventActive = false; // Add this line
 
         public virtual void TriggerEvent()
         {

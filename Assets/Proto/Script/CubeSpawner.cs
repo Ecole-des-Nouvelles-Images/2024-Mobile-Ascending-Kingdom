@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Elias.Scripts.Managers;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,7 +16,6 @@ namespace Proto.Script
         public List<float> rY = new List<float>();
         public GameObject cameraObject;
         public Bloc lastCube;
-        //public GameObject Indicator;
 
         public bool AutoStart;
 
@@ -54,9 +49,7 @@ namespace Proto.Script
                     newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
                     Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
                     float lengthZ = bounds.size.z;
-                    //Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
-                    //Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
-                    transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
+                    transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
                 }
                 SpawnCube = false;
             }
@@ -96,9 +89,7 @@ namespace Proto.Script
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
             float lengthZ = bounds.size.z;
-            //Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
-            //Indicator.transform.localPosition = new Vector3(newCube.transform.localPosition.x, 0, 0);
-            transform.position = new Vector3(transform.position.x,transform.position.y /*+ 2*/, transform.position.z);
+            transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
         }
 
         public void FreezeCubes()
@@ -108,23 +99,7 @@ namespace Proto.Script
             {
                 cube.Freeze = true;
                 Debug.Log(cube.name + " is freezed");
-                //CubeCount -= 1;
-                //GameManager.Instance.RemoveBloc(cube);
             }
         }
-
-        /*public void tempTap()
-        {
-            /*if (!CubeSpawner.lastCube.CompareTag("Solid"))
-            {*/
-                //Transform cubeTransform = CubeSpawner.lastCube.transform;
-                // Créer une rotation de 90 degrés autour de l'axe X
-                /*Quaternion rotation = Quaternion.Euler(90, 0, 0);
-                // Appliquer la rotation à l'objet
-                //cubeTransform.rotation *= rotation;
-            //}
-            Debug.Log("Tap Method Executed");
-            
-        }*/
     }
 }
