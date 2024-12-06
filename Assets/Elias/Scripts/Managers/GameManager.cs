@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Elias.Scripts.Cards;
 using Elias.Scripts.Event;
@@ -14,13 +13,11 @@ namespace Elias.Scripts.Managers
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         public CubeSpawner cubeSpawner;
-
         public List<Bloc> Blocs = new List<Bloc>();
         public UnityAction OnBlocListUpdated;
 
         private float _height = 0;
         private int _score = 0;
-
         private int _allBlocCount = 0;
         private int _eventTreshold = 15;
 
@@ -39,11 +36,18 @@ namespace Elias.Scripts.Managers
         private List<Button> _cardButtons = new List<Button>();
 
         private List<EventSO> _allEvents;
-        private EventSO _currentEvent;
+        public EventSO _currentEvent;
+        public bool EventActive = false;
+
+        public int BlocksDestroyed;
+        public int BlocksChanged;
 
         public List<Sprite> Backgrounds;
-        
-        public Sprite _currentBackground;
+        private Sprite _currentBackground;
+        private List<Sprite> _backgroundSequence = new List<Sprite>();
+        private int _backgroundIndex = 0;
+
+        public GameObject backgroundObject;
 
         public float Height
         {
@@ -73,7 +77,6 @@ namespace Elias.Scripts.Managers
             _currentScoreTreshold = _initiaScoretreshold;
             _currentPhaseTreshold = _initiaPhaseTreshold;
 
-            // Initialize _poolCards with all available cards
             _poolCards = new List<CardSO>
             {
                 ScriptableObject.CreateInstance<Fool>(),
@@ -85,18 +88,21 @@ namespace Elias.Scripts.Managers
                 ScriptableObject.CreateInstance<Emperor>(),
                 ScriptableObject.CreateInstance<Empress>(),
                 ScriptableObject.CreateInstance<Tower>(),
-                
             };
-            
+
             _allEvents = new List<EventSO>
             {
                 ScriptableObject.CreateInstance<Wind>(),
                 ScriptableObject.CreateInstance<Volcano>(),
                 ScriptableObject.CreateInstance<Blizzard>(),
-                ScriptableObject.CreateInstance<Wave>(),
+                //ScriptableObject.CreateInstance<Wave>(),
             };
 
-            // Initialize _cardButtons with your UI buttons
+            if (_allEvents.Count > 0)
+            {
+                _currentEvent = _allEvents[0];
+            }
+
             _cardButtons = new List<Button>();
             foreach (Transform child in cardPanel.transform)
             {
@@ -107,8 +113,8 @@ namespace Elias.Scripts.Managers
                 }
             }
 
-            // Hide the card panel initially
             cardPanel.SetActive(false);
+            InitializeBackgroundSequence();
         }
 
         private void Update()
@@ -120,13 +126,25 @@ namespace Elias.Scripts.Managers
 
             if (_height >= _currentPhaseTreshold)
             {
-                //PhaseTrigger();
+                PhaseTrigger();
             }
 
-            if (_allBlocCount >= _eventTreshold)
+            if (_allBlocCount >= _eventTreshold && !EventActive)
             {
                 EventTrigger(_currentEvent);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TestWindEvent();
+            }
+        }
+
+        private void TestWindEvent()
+        {
+            Debug.Log("Testing Wind Event Triggered!");
+            Wind testWind = ScriptableObject.CreateInstance<Wind>();
+            testWind.TriggerEvent();
         }
 
         public void AddBloc(Bloc piece)
@@ -138,7 +156,6 @@ namespace Elias.Scripts.Managers
             }
 
             Blocs.Add(piece);
-//            Debug.Log($"Added Bloc {piece.name} to Blocs list. Total count: {Blocs.Count}");
             UpdateHeightAndScore();
             OnBlocListUpdated?.Invoke();
             _allBlocCount++;
@@ -196,13 +213,12 @@ namespace Elias.Scripts.Managers
 
             _currentHeightTreshold = (_currentHeightTreshold + (_initialHeightTreshold * 1.1f));
             _currentScoreTreshold = (_currentScoreTreshold + (_initiaScoretreshold * 1.1f));
-            
+
             Debug.Log("Current score: " + _currentScoreTreshold);
             Debug.Log("Current height: " + _currentHeightTreshold);
 
             cardPanel.SetActive(true);
 
-            // Pick 3 random cards
             _displayedCards.Clear();
             for (int i = 0; i < 3 && _poolCards.Count > 0; i++)
             {
@@ -212,7 +228,6 @@ namespace Elias.Scripts.Managers
                 _poolCards.RemoveAt(randomIndex);
             }
 
-            // Update buttons with picked cards
             for (int i = 0; i < _cardButtons.Count; i++)
             {
                 if (i < _displayedCards.Count)
@@ -221,10 +236,8 @@ namespace Elias.Scripts.Managers
                     CardSO card = _displayedCards[i];
                     button.image.sprite = card.cardImage;
 
-                    // Get all TMP_Text components in the button's children
                     TMP_Text[] textComponents = button.GetComponentsInChildren<TMP_Text>();
 
-                    // Assign the card name and description to the appropriate TMP_Text components
                     if (textComponents.Length >= 2)
                     {
                         textComponents[0].text = card.cardName;
@@ -242,7 +255,6 @@ namespace Elias.Scripts.Managers
             }
         }
 
-
         private void OnCardButtonClick(Button button, CardSO card)
         {
             _deckCards.Add(card);
@@ -250,14 +262,12 @@ namespace Elias.Scripts.Managers
             _displayedCards.Remove(card);
             button.gameObject.SetActive(false);
 
-            // Return the other two cards to the pool
             foreach (var displayedCard in _displayedCards)
             {
                 _poolCards.Add(displayedCard);
             }
             _displayedCards.Clear();
 
-            // Hide the card panel
             cardPanel.SetActive(false);
         }
 
@@ -275,7 +285,57 @@ namespace Elias.Scripts.Managers
 
             Debug.Log("new phase treshold" + _currentPhaseTreshold);
 
-            cubeSpawner.FreezeCubes();
+            cubeSpawner.FreezeCubes(Blocs);
+
+            ChangeBackgroundAndEvent();
+        }
+
+        private void InitializeBackgroundSequence()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, Backgrounds.Count);
+            _currentBackground = Backgrounds[randomIndex];
+            _backgroundSequence.Add(_currentBackground);
+            Backgrounds.RemoveAt(randomIndex);
+
+            while (Backgrounds.Count > 0)
+            {
+                randomIndex = UnityEngine.Random.Range(0, Backgrounds.Count);
+                _backgroundSequence.Add(Backgrounds[randomIndex]);
+                Backgrounds.RemoveAt(randomIndex);
+            }
+
+            Backgrounds = new List<Sprite>(_backgroundSequence);
+
+            if (backgroundObject != null)
+            {
+                Image spriteRenderer = backgroundObject.GetComponent<Image>();
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.sprite = _currentBackground;
+                }
+            }
+        }
+
+        private void ChangeBackgroundAndEvent()
+        {
+            _backgroundIndex = (_backgroundIndex + 1) % _backgroundSequence.Count;
+            _currentBackground = _backgroundSequence[_backgroundIndex];
+
+            _currentEvent = _allEvents[_backgroundIndex];
+
+            if (backgroundObject != null)
+            {
+                SpriteRenderer spriteRenderer = backgroundObject.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    spriteRenderer.sprite = _currentBackground;
+                }
+            }
+        }
+
+        public void ResetEventThreshold()
+        {
+            _eventTreshold = 15;
         }
     }
 }
