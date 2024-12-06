@@ -92,13 +92,12 @@ namespace Proto.Script
             transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
         }
 
-        public void FreezeCubes()
+        public void FreezeCubes(List<Bloc> blocs)
         {
             SpawnCube = false;
-            foreach (Bloc cube in GameManager.Instance.Blocs)
+            foreach (Bloc cube in blocs)
             {
                 cube.Freeze = true;
-                Debug.Log(cube.name + " is freezed");
             }
         }
     }

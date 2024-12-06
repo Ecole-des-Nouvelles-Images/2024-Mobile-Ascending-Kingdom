@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Blizzard
   m_EditorClassIdentifier: Assembly-CSharp:Elias.Scripts.Event:Blizzard
+  eventName: 
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}
   eventBlockDuration: 0
-  EventActive: 0

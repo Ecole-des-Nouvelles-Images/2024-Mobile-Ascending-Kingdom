@@ -14,7 +14,7 @@ namespace Elias.Scripts.Event
         public override void TriggerEvent()
         {
             Debug.Log("Wind Event Triggered!");
-            EventActive = true;
+            GameManager.Instance.EventActive = true;
             GameManager.Instance.StartCoroutine(ApplyWindEffect(duration));
         }
 
@@ -47,7 +47,7 @@ namespace Elias.Scripts.Event
                 rb.drag = 0.1f; // Revert to original drag
             }
 
-            EventActive = false;
+            GameManager.Instance.EventActive = false;
             GameManager.Instance.ResetEventThreshold();
         }
 
@@ -78,7 +78,7 @@ namespace Elias.Scripts.Event
         public override void TriggerEvent()
         {
             Debug.Log("Blizzard Event Triggered!");
-            EventActive = true;
+            GameManager.Instance.EventActive = true;
             GameManager.Instance.StartCoroutine(ApplyBlizzardEffect());
         }
 
@@ -111,68 +111,63 @@ namespace Elias.Scripts.Event
             }
 
             GameManager.Instance.OnBlocListUpdated -= RevertBlizzardEffect;
-            EventActive = false;
+            GameManager.Instance.EventActive = false;
             GameManager.Instance.ResetEventThreshold();
         }
     }
 
 
 
-    [CreateAssetMenu(fileName = "VolcanoEvent", menuName = "Events/Volcano")]
+    [CreateAssetMenu(fileName = "Volcano", menuName = "Events/Volcano")]
     public class Volcano : EventSO
     {
         public ParticleSystem volcanoParticleSystem;
-        private int blocksDestroyed = 0;
-        private const int maxBlocksToDestroy = 5;
 
         public override void TriggerEvent()
         {
             Debug.Log("Volcano Event Triggered!");
-            EventActive = true;
+            GameManager.Instance.EventActive = true;
+            GameManager.Instance.BlocksDestroyed = 0; // Reset the counter
             GameManager.Instance.StartCoroutine(ApplyVolcanoEffect());
+            volcanoParticleSystem.gameObject.SetActive(true);
         }
 
         private IEnumerator ApplyVolcanoEffect()
         {
-            // Activate the particle system
-            volcanoParticleSystem.gameObject.SetActive(true);
+            yield return new WaitUntil(() => GameManager.Instance.BlocksDestroyed >= 5);
 
-            // Enable collision detection
-            ParticleSystem.CollisionModule collisionModule = volcanoParticleSystem.collision;
-            collisionModule.enabled = true;
-            collisionModule.sendCollisionMessages = true;
-
-            // Wait until the event ends
-            yield return new WaitUntil(() => blocksDestroyed >= maxBlocksToDestroy);
-
-            // Deactivate the particle system
             volcanoParticleSystem.gameObject.SetActive(false);
 
-            // End the event
-            EventActive = false;
+            GameManager.Instance.EventActive = false;
             GameManager.Instance.ResetEventThreshold();
         }
-
-        private void OnParticleCollision(GameObject other)
-        {
-            Bloc bloc = other.GetComponent<Bloc>();
-            if (bloc != null)
-            {
-                GameManager.Instance.RemoveBloc(bloc);
-                Object.Destroy(bloc.gameObject);
-                blocksDestroyed++;
-                Debug.Log("Block destroyed by Volcano Event. Total destroyed: " + blocksDestroyed);
-            }
-        }
     }
+
     
     
-    [CreateAssetMenu(fileName = "TempestEvent", menuName = "Events/Tempest")]
-    public class Tempest: EventSO
+    [CreateAssetMenu(fileName = "Tempest", menuName = "Events/Tempest")]
+    public class Tempest : EventSO
     {
+        
+        public ParticleSystem tempestParticleSystem;
         public override void TriggerEvent()
         {
             Debug.Log("Tempest Event Triggered!");
+            GameManager.Instance.EventActive = true;
+            GameManager.Instance.BlocksChanged = 0;
+            GameManager.Instance.StartCoroutine(ApplyTempestEffect());
+            tempestParticleSystem.gameObject.SetActive(true);
+        }
+
+        private IEnumerator ApplyTempestEffect()
+        {
+            yield return new WaitUntil(() => GameManager.Instance.BlocksChanged > 0);
+
+            tempestParticleSystem.gameObject.SetActive(false);
+
+            GameManager.Instance.EventActive = false;
+            GameManager.Instance.ResetEventThreshold();
         }
     }
+
 }

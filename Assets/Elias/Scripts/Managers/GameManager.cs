@@ -5,6 +5,7 @@ using Proto.Script;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Elias.Scripts.Managers
@@ -35,7 +36,11 @@ namespace Elias.Scripts.Managers
         private List<Button> _cardButtons = new List<Button>();
 
         private List<EventSO> _allEvents;
-        private EventSO _currentEvent;
+        public EventSO _currentEvent;
+        public bool EventActive = false;
+
+        public int BlocksDestroyed;
+        public int BlocksChanged;
 
         public List<Sprite> Backgrounds;
         private Sprite _currentBackground;
@@ -124,7 +129,7 @@ namespace Elias.Scripts.Managers
                 PhaseTrigger();
             }
 
-            if (_allBlocCount >= _eventTreshold && !_currentEvent.EventActive)
+            if (_allBlocCount >= _eventTreshold && !EventActive)
             {
                 EventTrigger(_currentEvent);
             }
@@ -280,7 +285,7 @@ namespace Elias.Scripts.Managers
 
             Debug.Log("new phase treshold" + _currentPhaseTreshold);
 
-            cubeSpawner.FreezeCubes();
+            cubeSpawner.FreezeCubes(Blocs);
 
             ChangeBackgroundAndEvent();
         }
