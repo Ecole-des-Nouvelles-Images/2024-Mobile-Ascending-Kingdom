@@ -597,8 +597,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeSpawner: {fileID: 1128565145}
-  sensitivityFactor: 1
-  slideSpeed: 0.25
+  sensitivityFactor: 2
+  slideSpeed: 1
   minSlideDistance: -7
   maxSlideDistance: 7
 --- !u!1 &2004278810
