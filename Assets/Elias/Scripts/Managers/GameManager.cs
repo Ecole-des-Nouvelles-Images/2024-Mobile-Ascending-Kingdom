@@ -258,7 +258,8 @@ namespace Elias.Scripts.Managers
         private void OnCardButtonClick(Button button, CardSO card)
         {
             _deckCards.Add(card);
-            card.TriggerEvent();
+            card.isCardActive = true;
+            card.Register();
             _displayedCards.Remove(card);
             button.gameObject.SetActive(false);
 
@@ -270,6 +271,18 @@ namespace Elias.Scripts.Managers
 
             cardPanel.SetActive(false);
         }
+        
+        public void RemoveCardFromDeck(CardSO card)
+        {
+            if (_deckCards.Contains(card))
+            {
+                card.isCardActive = false;
+                card.Unregister(); // Unregister the card
+                _deckCards.Remove(card);
+            }
+        }
+
+
 
         public void EventTrigger(EventSO phaseEvent)
         {
@@ -337,5 +350,59 @@ namespace Elias.Scripts.Managers
         {
             _eventTreshold = 15;
         }
+        
+        public void FreezeCubesWithIvy()
+        {
+            List<Bloc> blocsToFreeze = new List<Bloc>();
+
+            foreach (Bloc bloc in Blocs)
+            {
+                if (bloc.shape == "L" || bloc.shape == "La" || bloc.shape == "Z" || bloc.shape == "Za" || bloc.shape == "O" || bloc.shape == "I" || bloc.shape == "T")
+                {
+                    blocsToFreeze.Add(bloc);
+                }
+            }
+
+            cubeSpawner.FreezeCubes(blocsToFreeze);
+        }
+
+        
+        public void FreezeEveryFifteenBlocks()
+        {
+            if (_allBlocCount % 15 == 0)
+            {
+                cubeSpawner.FreezeCubes(Blocs);
+            }
+        }
+        
+        public void DestroyStackedIdenticalBlocks()
+        {
+            List<Bloc> blocsToRemove = new List<Bloc>();
+
+            for (int i = 0; i < Blocs.Count - 2; i++)
+            {
+                Bloc currentBloc = Blocs[i];
+                Bloc nextBloc = Blocs[i + 1];
+                Bloc nextNextBloc = Blocs[i + 2];
+
+                if (currentBloc.shape == nextBloc.shape && nextBloc.shape == nextNextBloc.shape)
+                {
+                    blocsToRemove.Add(currentBloc);
+                    blocsToRemove.Add(nextBloc);
+                    blocsToRemove.Add(nextNextBloc);
+                }
+            }
+
+            foreach (Bloc bloc in blocsToRemove)
+            {
+                RemoveBloc(bloc);
+                Destroy(bloc.gameObject);
+            }
+        }
+
+
+        
     }
+    
+    
 }
