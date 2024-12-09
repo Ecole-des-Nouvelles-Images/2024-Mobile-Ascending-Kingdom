@@ -42,12 +42,13 @@ namespace Elias.Scripts.Managers
         public int BlocksDestroyed;
         public int BlocksChanged;
 
-        public List<Sprite> Backgrounds;
-        private Sprite _currentBackground;
-        private List<Sprite> _backgroundSequence = new List<Sprite>();
-        private int _backgroundIndex = 0;
+        [FormerlySerializedAs("backgroundObject")] public GameObject currentBackgroundObject;
+        private ParticleSystem _currentPS;
 
-        public GameObject backgroundObject;
+        public EventSO VolcanoEvent;
+        public EventSO TempestEvent;
+        public EventSO WindEvent;
+        public EventSO BlizzardEvent;
 
         public float Height
         {
@@ -92,10 +93,10 @@ namespace Elias.Scripts.Managers
 
             _allEvents = new List<EventSO>
             {
-                ScriptableObject.CreateInstance<Wind>(),
+                //ScriptableObject.CreateInstance<Wind>(),
                 ScriptableObject.CreateInstance<Volcano>(),
                 ScriptableObject.CreateInstance<Blizzard>(),
-                //ScriptableObject.CreateInstance<Wave>(),
+                ScriptableObject.CreateInstance<Tempest>(),
             };
 
             if (_allEvents.Count > 0)
@@ -131,20 +132,19 @@ namespace Elias.Scripts.Managers
 
             if (_allBlocCount >= _eventTreshold && !EventActive)
             {
-                EventTrigger(_currentEvent);
+                //EventTrigger(_currentEvent);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                TestWindEvent();
+                TestEvent();
             }
         }
 
-        private void TestWindEvent()
+        private void TestEvent()
         {
             Debug.Log("Testing Wind Event Triggered!");
-            Wind testWind = ScriptableObject.CreateInstance<Wind>();
-            testWind.TriggerEvent();
+            VolcanoEvent.TriggerEvent();
         }
 
         public void AddBloc(Bloc piece)
@@ -271,7 +271,7 @@ namespace Elias.Scripts.Managers
 
             cardPanel.SetActive(false);
         }
-        
+
         public void RemoveCardFromDeck(CardSO card)
         {
             if (_deckCards.Contains(card))
@@ -281,8 +281,6 @@ namespace Elias.Scripts.Managers
                 _deckCards.Remove(card);
             }
         }
-
-
 
         public void EventTrigger(EventSO phaseEvent)
         {
@@ -305,44 +303,38 @@ namespace Elias.Scripts.Managers
 
         private void InitializeBackgroundSequence()
         {
-            int randomIndex = UnityEngine.Random.Range(0, Backgrounds.Count);
-            _currentBackground = Backgrounds[randomIndex];
-            _backgroundSequence.Add(_currentBackground);
-            Backgrounds.RemoveAt(randomIndex);
-
-            while (Backgrounds.Count > 0)
+            if (_currentEvent != null)
             {
-                randomIndex = UnityEngine.Random.Range(0, Backgrounds.Count);
-                _backgroundSequence.Add(Backgrounds[randomIndex]);
-                Backgrounds.RemoveAt(randomIndex);
-            }
-
-            Backgrounds = new List<Sprite>(_backgroundSequence);
-
-            if (backgroundObject != null)
-            {
-                Image spriteRenderer = backgroundObject.GetComponent<Image>();
-                if (spriteRenderer != null)
-                {
-                    spriteRenderer.sprite = _currentBackground;
-                }
+                UpdateBackgroundAndParticleSystem(_currentEvent);
             }
         }
 
         private void ChangeBackgroundAndEvent()
         {
-            _backgroundIndex = (_backgroundIndex + 1) % _backgroundSequence.Count;
-            _currentBackground = _backgroundSequence[_backgroundIndex];
+            int nextEventIndex = (_allEvents.IndexOf(_currentEvent) + 1) % _allEvents.Count;
+            _currentEvent = _allEvents[nextEventIndex];
+            UpdateBackgroundAndParticleSystem(_currentEvent);
+        }
 
-            _currentEvent = _allEvents[_backgroundIndex];
-
-            if (backgroundObject != null)
+        private void UpdateBackgroundAndParticleSystem(EventSO eventSO)
+        {
+            if (currentBackgroundObject != null)
             {
-                SpriteRenderer spriteRenderer = backgroundObject.GetComponent<SpriteRenderer>();
+                Image spriteRenderer = currentBackgroundObject.GetComponent<Image>();
                 if (spriteRenderer != null)
                 {
-                    spriteRenderer.sprite = _currentBackground;
+                    spriteRenderer.sprite = eventSO.eventBackground;
                 }
+            }
+
+            if (_currentPS != null)
+            {
+                Destroy(_currentPS.gameObject);
+            }
+
+            if (eventSO.particleSystem != null)
+            {
+                _currentPS = Instantiate(eventSO.particleSystem, Vector3.zero, Quaternion.identity);
             }
         }
 
@@ -350,7 +342,7 @@ namespace Elias.Scripts.Managers
         {
             _eventTreshold = 15;
         }
-        
+
         public void FreezeCubesWithIvy()
         {
             List<Bloc> blocsToFreeze = new List<Bloc>();
@@ -366,7 +358,6 @@ namespace Elias.Scripts.Managers
             cubeSpawner.FreezeCubes(blocsToFreeze);
         }
 
-        
         public void FreezeEveryFifteenBlocks()
         {
             if (_allBlocCount % 15 == 0)
@@ -374,7 +365,7 @@ namespace Elias.Scripts.Managers
                 cubeSpawner.FreezeCubes(Blocs);
             }
         }
-        
+
         public void DestroyStackedIdenticalBlocks()
         {
             List<Bloc> blocsToRemove = new List<Bloc>();
@@ -399,10 +390,5 @@ namespace Elias.Scripts.Managers
                 Destroy(bloc.gameObject);
             }
         }
-
-
-        
     }
-    
-    
 }

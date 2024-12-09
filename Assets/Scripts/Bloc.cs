@@ -67,6 +67,7 @@ public class Bloc : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
+        Debug.Log("hihihi");
         if (GameManager.Instance.EventActive && GameManager.Instance._currentEvent.eventName == "Volcano")
         {
             Destroy(this.gameObject);

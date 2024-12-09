@@ -6,11 +6,11 @@ namespace Elias.Scripts.Event
     public class EventSO : ScriptableObject
     {
         public string eventName;
+        public Sprite eventBackground;
         public AudioClip eventSound;
         public ParticleSystem particleSystem;
         public Shader shader;
         public int eventBlockDuration;
-         // Add this line
 
         public virtual void TriggerEvent()
         {

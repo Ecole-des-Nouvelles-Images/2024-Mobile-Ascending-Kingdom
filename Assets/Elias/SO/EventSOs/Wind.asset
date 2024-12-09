@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed586bfd0a34a94aa5e69497912377d, type: 3}
   m_Name: Wind
   m_EditorClassIdentifier: 
+  eventName: Wind
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}
   eventBlockDuration: 0
-  EventActive: 0
   duration: 5
   gravityScale: 2

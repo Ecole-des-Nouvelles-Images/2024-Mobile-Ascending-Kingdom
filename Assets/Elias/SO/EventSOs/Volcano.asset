@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: db2e29da2e2f4143b5d3bad61ec3867b, type: 3}
   m_Name: Volcano
-  m_EditorClassIdentifier: Assembly-CSharp:Elias.Scripts.Event:Volcano
-  eventName: 
+  m_EditorClassIdentifier: 
+  eventName: Volcano
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}
   eventBlockDuration: 0
-  volcanoParticleSystem: {fileID: 0}
-  blocksDestroyed: 0
+  volcanoParticlePrefab: {fileID: 6531045888520918331, guid: 55eba574a4bfaa249930f053bd7b7c91,
+    type: 3}
