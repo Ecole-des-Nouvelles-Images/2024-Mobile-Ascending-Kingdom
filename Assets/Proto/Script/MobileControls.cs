@@ -20,11 +20,15 @@ public class MobileControls : MonoBehaviour
 
     public float minSlideDistance = -100.0f; // Distance minimale de glissement
     public float maxSlideDistance = 100.0f; // Distance maximale de glissement
+    public float minSlideThreshold = 10.0f; // Seuil minimum de glissement
+
+    private Vector3 targetPosition;
 
     void Start()
     {
         // Initialiser lastZPosition à 0 au début
         lastZPosition = 0;
+        targetPosition = transform.position;
     }
 
     void Update()
@@ -67,11 +71,14 @@ public class MobileControls : MonoBehaviour
                     break;
             }
         }
+
+        // Déplacer l'objet vers la position cible
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, slideSpeed * Time.deltaTime);
     }
 
     void CheckSwipe()
     {
-        if (currentTouchPosition.y < startTouchPosition.y - 500) // Threshold a ajuster
+        if (currentTouchPosition.y < startTouchPosition.y - 350) // Threshold a ajuster
         {
 //            Debug.Log("Swipe Down Detected");
             SwipeDownMethod();
@@ -91,13 +98,16 @@ public class MobileControls : MonoBehaviour
     void CheckSlide()
     {
         float slideEndX = currentTouchPosition.x;
-//        Debug.Log("Slide X Position: " + slideEndX);
+        float slideDistance = Mathf.Abs(slideEndX - slideStartX);
 
-        // Utilisez la position X du doigt pour déterminer la position Z de l'objet
-        float newZPosition = Mathf.Round(slideEndX / Screen.width * (maxSlideDistance - minSlideDistance) + minSlideDistance);
+        if (slideDistance >= minSlideThreshold)
+        {
+            // Utilisez la position X du doigt pour déterminer la position Z de l'objet
+            float newZPosition = Mathf.Round(slideEndX / Screen.width * (maxSlideDistance - minSlideDistance) + minSlideDistance);
 
-        // Utilisez la valeur normalisée pour déplacer l'objet
-        SlideMethod(newZPosition);
+            // Utilisez la valeur normalisée pour déplacer l'objet
+            SlideMethod(newZPosition);
+        }
     }
 
     void CheckDoubleTap(Touch touch)
@@ -134,8 +144,8 @@ public class MobileControls : MonoBehaviour
         // Limiter la position Z entre -7 et 7
         newZPosition = Mathf.Clamp(newZPosition, -7, 7);
 
-        // Mettre à jour la position de l'objet
-        transform.position = new Vector3(transform.position.x, transform.position.y, newZPosition);
+        // Mettre à jour la position cible
+        targetPosition = new Vector3(transform.position.x, transform.position.y, newZPosition);
 
         // Stocker la dernière position Z
         lastZPosition = newZPosition;

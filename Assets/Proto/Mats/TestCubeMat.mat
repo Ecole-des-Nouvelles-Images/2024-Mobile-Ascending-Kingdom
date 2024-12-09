@@ -65,7 +65,7 @@ Material:
     - _ReceiveShadows: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _VineAmount: 0.493
+    - _VineAmount: 0
     - _VineMaskFloat: 0
     - _WorkflowMode: 1
     - _ZTest: 4

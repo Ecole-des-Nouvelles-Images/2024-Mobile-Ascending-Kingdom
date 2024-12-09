@@ -598,9 +598,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeSpawner: {fileID: 1128565145}
   sensitivityFactor: 2
-  slideSpeed: 1
+  slideSpeed: 15
   minSlideDistance: -7
   maxSlideDistance: 7
+  minSlideThreshold: 10
 --- !u!1 &2004278810
 GameObject:
   m_ObjectHideFlags: 0
