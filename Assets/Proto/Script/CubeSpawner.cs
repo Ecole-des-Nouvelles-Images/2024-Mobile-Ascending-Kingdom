@@ -89,7 +89,7 @@ namespace Proto.Script
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
             float lengthZ = bounds.size.z;
-            //transform.position = new Vector3(transform.position.x,transform.position.y + transform.parent.position.y, transform.position.z);
+            //transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
         }
 
         public void FreezeCubes(List<Bloc> blocs)
