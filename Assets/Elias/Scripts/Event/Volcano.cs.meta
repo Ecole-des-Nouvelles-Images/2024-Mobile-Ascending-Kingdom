@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: db2e29da2e2f4143b5d3bad61ec3867b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eventSound: {instanceID: 0}
+  - particleSystem: {instanceID: 0}
+  - shader: {instanceID: 0}
+  - volcanoParticlePrefab: {fileID: 6531045888520918331, guid: 55eba574a4bfaa249930f053bd7b7c91,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,15 +1,32 @@
+using System.Collections.Generic;
+using Elias.Scripts.Managers;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCard", menuName = "Cards/New Card")]
-public class CardSO : ScriptableObject
+namespace Elias.Scripts.Cards
 {
-    public string cardName;
-    public string cardDescription;
-    public Sprite cardImage;
-    public bool isCardActive;
-
-    public virtual void TriggerEvent()
+    public class CardSO : ScriptableObject
     {
-        // event logic
+        public string cardName;
+        public string cardDescription;
+        public Sprite cardImage;
+        public bool isCardActive;
+
+        public void Register()
+        {
+            if (isCardActive)
+            {
+                GameManager.Instance.OnBlocListUpdated += OnBlocListUpdated;
+            }
+        }
+
+        public void Unregister()
+        {
+            GameManager.Instance.OnBlocListUpdated -= OnBlocListUpdated;
+        }
+
+        public virtual void OnBlocListUpdated()
+        {
+            // To be overridden with specific card logic.
+        }
     }
 }

@@ -1,7 +1,9 @@
+using Elias.Scripts.Managers;
 using UnityEngine;
 
 namespace Elias.Scripts.Cards
 {
+
     [CreateAssetMenu(fileName = "FoolCard", menuName = "Cards/Fool Card")]
     public class Fool : CardSO
     {
@@ -10,9 +12,13 @@ namespace Elias.Scripts.Cards
             cardName = "The Fool";
             cardDescription = "Represents new beginnings, faith, and spontaneity.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Fool
+            if (isCardActive)
+            {
+                GameManager.Instance.DestroyStackedIdenticalBlocks();
+            }
         }
     }
 
@@ -24,9 +30,13 @@ namespace Elias.Scripts.Cards
             cardName = "The Empress";
             cardDescription = "Represents fertility, beauty, and nature.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Empress
+            if (isCardActive)
+            {
+                GameManager.Instance.FreezeCubesWithIvy();
+            }
         }
     }
 
@@ -38,9 +48,13 @@ namespace Elias.Scripts.Cards
             cardName = "The Emperor";
             cardDescription = "Represents authority, establishment, and structure.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Emperor
+            if (isCardActive)
+            {
+                GameManager.Instance.FreezeEveryFifteenBlocks();
+            }
         }
     }
 
@@ -52,11 +66,13 @@ namespace Elias.Scripts.Cards
             cardName = "Death";
             cardDescription = "Represents endings, transitions, and change.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for Death
+            // Placeholder logic for Death card
         }
     }
+
     [CreateAssetMenu(fileName = "DevilCard", menuName = "Cards/Devil Card")]
     public class Devil : CardSO
     {
@@ -65,9 +81,10 @@ namespace Elias.Scripts.Cards
             cardName = "The Devil";
             cardDescription = "Represents bondage, addiction, and materialism.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Devil
+            // Placeholder logic for Devil card
         }
     }
 
@@ -79,9 +96,10 @@ namespace Elias.Scripts.Cards
             cardName = "The Tower";
             cardDescription = "Represents sudden change, upheaval, and chaos.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Tower
+            // Placeholder logic for Tower card
         }
     }
 
@@ -93,9 +111,10 @@ namespace Elias.Scripts.Cards
             cardName = "The Moon";
             cardDescription = "Represents intuition, dreams, and the subconscious.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Moon
+            // Placeholder logic for Moon card
         }
     }
 
@@ -107,9 +126,10 @@ namespace Elias.Scripts.Cards
             cardName = "The Sun";
             cardDescription = "Represents positivity, success, and radiance.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The Sun
+            // Placeholder logic for Sun card
         }
     }
 
@@ -121,9 +141,10 @@ namespace Elias.Scripts.Cards
             cardName = "The World";
             cardDescription = "Represents completion, accomplishment, and travel.";
         }
-        public override void TriggerEvent()
+
+        public override void OnBlocListUpdated()
         {
-            // Implement the event logic for The World
+            // Placeholder logic for World card
         }
     }
 }
