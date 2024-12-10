@@ -17,6 +17,8 @@ namespace Proto.Script
         public GameObject cameraObject;
         public Bloc lastCube;
 
+        private bool tempbool;
+
         public bool AutoStart;
 
         private void Awake()
@@ -53,6 +55,8 @@ namespace Proto.Script
                 }
                 SpawnCube = false;
             }
+
+            
         }
 
         public void GoRight()
@@ -91,7 +95,12 @@ namespace Proto.Script
             float lengthZ = bounds.size.z;
             transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
         }
-
+        [ContextMenu("Freeze Cube")]
+        public void FreezeMethod()
+        {
+            FreezeCubes(GameManager.Instance.Blocs);
+        }
+        
         public void FreezeCubes(List<Bloc> blocs)
         {
             SpawnCube = false;

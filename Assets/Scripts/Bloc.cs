@@ -15,7 +15,8 @@ public class Bloc : MonoBehaviour
     private MeshRenderer _meshRenderer;
     public bool GoDown;
     private CubeSpawner _cubeSpawner;
-    public string shape;
+    [FormerlySerializedAs("shape")] public string Shape;
+    public GameObject Vines;
 
     private void Awake() {
         Rigidbody = GetComponent<Rigidbody>();
@@ -42,6 +43,7 @@ public class Bloc : MonoBehaviour
         Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         Rigidbody.useGravity = false;
         SetShaderBool("_ISFREEZED");
+        StartCoroutine("FreezeAnimation");
         Freeze = false;
     }
     
@@ -87,6 +89,37 @@ public class Bloc : MonoBehaviour
                 GameManager.Instance.BlocksChanged++;
             }
         }
-        
+    }
+    private IEnumerator FreezeAnimation()
+    {
+            _meshRenderer.material.SetFloat("_VineAmount", 0.1f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.2f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.3f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.4f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.5f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.6f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.7f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.8f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 0.9f);
+            yield return new WaitForSeconds(0.2f);
+            _meshRenderer.material.SetFloat("_VineAmount", 1f);
+            Vines.SetActive(true);
+            Vines.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            yield return new WaitForSeconds(0.1f);
+            Vines.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            yield return new WaitForSeconds(0.1f);
+            Vines.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            yield return new WaitForSeconds(0.1f);
+            Vines.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            yield return new WaitForSeconds(0.1f);
+            Vines.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 }

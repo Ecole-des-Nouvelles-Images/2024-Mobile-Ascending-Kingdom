@@ -72,8 +72,12 @@ public class MobileControls : MonoBehaviour
             }
         }
 
-        // Déplacer l'objet vers la position cible
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, slideSpeed * Time.deltaTime);
+        // Déplacer l'objet vers la position cible en conservant la position Y actuelle
+        transform.position = new Vector3(
+            Mathf.MoveTowards(transform.position.x, targetPosition.x, slideSpeed * Time.deltaTime),
+            transform.position.y,
+            Mathf.MoveTowards(transform.position.z, targetPosition.z, slideSpeed * Time.deltaTime)
+        );
     }
 
     void CheckSwipe()
@@ -144,7 +148,7 @@ public class MobileControls : MonoBehaviour
         // Limiter la position Z entre -7 et 7
         newZPosition = Mathf.Clamp(newZPosition, -7, 7);
 
-        // Mettre à jour la position cible
+        // Mettre à jour la position cible en conservant la position Y actuelle
         targetPosition = new Vector3(transform.position.x, transform.position.y, newZPosition);
 
         // Stocker la dernière position Z
