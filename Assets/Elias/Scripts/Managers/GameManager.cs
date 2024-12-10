@@ -21,9 +21,9 @@ namespace Elias.Scripts.Managers
         private int _allBlocCount = 0;
         private int _eventTreshold = 15;
 
-        private float _initialHeightTreshold = 10f;
-        private float _initiaScoretreshold = 5f;
-        private float _initiaPhaseTreshold = 20f;
+        private float _initialHeightTreshold = 100f;
+        private float _initiaScoretreshold = 55f;
+        private float _initiaPhaseTreshold = 10f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
@@ -42,7 +42,7 @@ namespace Elias.Scripts.Managers
         public int BlocksDestroyed;
         public int BlocksChanged;
 
-        [FormerlySerializedAs("backgroundObject")] public GameObject currentBackgroundObject;
+        public GameObject currentBackgroundObject;
         private ParticleSystem _currentPS;
 
         public EventSO VolcanoEvent;
@@ -93,10 +93,10 @@ namespace Elias.Scripts.Managers
 
             _allEvents = new List<EventSO>
             {
-                //ScriptableObject.CreateInstance<Wind>(),
-                ScriptableObject.CreateInstance<Volcano>(),
-                ScriptableObject.CreateInstance<Blizzard>(),
-                ScriptableObject.CreateInstance<Tempest>(),
+                VolcanoEvent,
+                TempestEvent,
+                WindEvent,
+                BlizzardEvent
             };
 
             if (_allEvents.Count > 0)

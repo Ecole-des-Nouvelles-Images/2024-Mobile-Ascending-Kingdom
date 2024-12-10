@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Blizzard
   m_EditorClassIdentifier: 
   eventName: Blizzard
+  eventBackground: {fileID: 21300000, guid: 2dfdc14f89bcae742aee4600dc980513, type: 3}
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Volcano
   m_EditorClassIdentifier: 
   eventName: Volcano
+  eventBackground: {fileID: 21300000, guid: 9102b6807e4a7df4cbe58190006c896a, type: 3}
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}

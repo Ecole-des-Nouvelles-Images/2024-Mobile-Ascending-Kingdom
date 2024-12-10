@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Wind
   m_EditorClassIdentifier: 
   eventName: Wind
+  eventBackground: {fileID: 21300000, guid: 9aa8362a6c11ebe488de597f3a5d78e4, type: 3}
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}
   eventBlockDuration: 0
   duration: 5
-  gravityScale: 2
+  horizontalForce: 1
+  forceDirection: {x: 1, y: 0, z: 0}

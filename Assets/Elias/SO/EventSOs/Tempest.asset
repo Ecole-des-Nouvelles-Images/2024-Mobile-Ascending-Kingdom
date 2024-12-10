@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Tempest
   m_EditorClassIdentifier: 
   eventName: Tempest
+  eventBackground: {fileID: 21300000, guid: 59dd475f25884f643a73b3074a2a9ecc, type: 3}
   eventSound: {fileID: 0}
   particleSystem: {fileID: 0}
   shader: {fileID: 0}
   eventBlockDuration: 0
-  tempestParticleSystem: {fileID: 0}
+  tempestParticlePrefab: {fileID: 0}
