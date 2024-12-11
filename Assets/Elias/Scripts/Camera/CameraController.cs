@@ -9,6 +9,11 @@ namespace Elias.Scripts.Camera
         public CinemachineTargetGroup TargetGroup;
         public float moveSpeed = 2f;
         private GameObject[] dummyTargets;
+        public Canvas backgroundCanvas;
+        private float backgroundMultiplier = -100f; // Negative value to invert the movement
+        private Vector3 initialBackgroundPosition;
+        private Vector3 initialTargetGroupPosition;
+        private Vector3 targetBackgroundPosition;
 
         private void Start()
         {
@@ -23,6 +28,11 @@ namespace Elias.Scripts.Camera
                 dummyTargets[i] = new GameObject("DummyTarget_" + i);
                 dummyTargets[i].transform.position = new Vector3(0f, 0f, 0f);
             }
+
+            // Store the initial positions
+            initialBackgroundPosition = backgroundCanvas.transform.position;
+            initialTargetGroupPosition = TargetGroup.transform.position;
+            targetBackgroundPosition = initialBackgroundPosition;
         }
 
         private void OnDestroy()
@@ -35,6 +45,12 @@ namespace Elias.Scripts.Camera
                     Destroy(dummy);
                 }
             }
+        }
+
+        private void Update()
+        {
+            UpdateBackgroundPosition();
+            SmoothBackgroundTransition();
         }
 
         private void UpdateTargetGroup()
@@ -62,6 +78,24 @@ namespace Elias.Scripts.Camera
             while (TargetGroup.m_Targets.Length > 0)
             {
                 TargetGroup.RemoveMember(TargetGroup.m_Targets[0].target);
+            }
+        }
+
+        private void UpdateBackgroundPosition()
+        {
+            if (TargetGroup != null && backgroundCanvas != null)
+            {
+                Vector3 currentTargetGroupPosition = TargetGroup.transform.position;
+                float targetGroupYOffset = currentTargetGroupPosition.y - initialTargetGroupPosition.y;
+                targetBackgroundPosition = initialBackgroundPosition + new Vector3(0f, targetGroupYOffset * backgroundMultiplier, 0f);
+            }
+        }
+
+        private void SmoothBackgroundTransition()
+        {
+            if (backgroundCanvas != null)
+            {
+                backgroundCanvas.transform.position = Vector3.Lerp(backgroundCanvas.transform.position, targetBackgroundPosition, moveSpeed * Time.deltaTime);
             }
         }
     }

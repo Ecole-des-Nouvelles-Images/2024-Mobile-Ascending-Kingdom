@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7915049490644907093}
   m_Layer: 0
-  m_Name: EGO_Storm_PS
+  m_Name: PS_Storm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

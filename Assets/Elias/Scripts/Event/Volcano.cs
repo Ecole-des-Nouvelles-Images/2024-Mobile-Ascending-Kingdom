@@ -7,29 +7,27 @@ namespace Elias.Scripts.Event
     [CreateAssetMenu(fileName = "Volcano", menuName = "Events/Volcano")]
     public class Volcano : EventSO
     {
-        public GameObject volcanoParticlePrefab; // Reference to the prefab
-
-        private GameObject volcanoParticleSystemInstance; // Instance of the particle system
 
         public override void TriggerEvent()
         {
-            if (volcanoParticlePrefab == null)
-            {
-                Debug.LogError("volcanoParticlePrefab is not assigned in the GameManager!");
-                return;
-            }
-
             Debug.Log("Volcano Event Triggered!");
             GameManager.Instance.EventActive = true;
             GameManager.Instance.BlocksDestroyed = 0; // Reset the counter
 
-            volcanoParticleSystemInstance = Instantiate(volcanoParticlePrefab);
-            volcanoParticleSystemInstance.SetActive(true);
-
-            ParticleSystem ps = volcanoParticleSystemInstance.GetComponent<ParticleSystem>();
-            if (ps != null && !ps.isPlaying)
+            ambiantParticleSystem = GameManager.Instance.VolcanoPS;
+            activeParticleSystem = GameManager.Instance.MeteorPS;
+            if (ambiantParticleSystem != null)
             {
-                ps.Play();
+                ambiantParticleSystem.gameObject.SetActive(true);
+                activeParticleSystem.gameObject.SetActive(true);
+                ambiantParticleSystem.Play();
+                activeParticleSystem.Play();
+                
+            }
+
+            else
+            {
+                Debug.LogWarning("No PS_Ashes ParticleSystem found!");
             }
 
             GameManager.Instance.StartCoroutine(ApplyVolcanoEffect());
@@ -39,20 +37,16 @@ namespace Elias.Scripts.Event
         {
             yield return new WaitUntil(() => GameManager.Instance.BlocksDestroyed >= 5);
 
-            if (volcanoParticleSystemInstance != null)
+            if (ambiantParticleSystem != null && activeParticleSystem != null)
             {
-                ParticleSystem ps = volcanoParticleSystemInstance.GetComponent<ParticleSystem>();
-                if (ps != null && ps.isPlaying)
-                {
-                    ps.Stop();
-                }
-
-                volcanoParticleSystemInstance.SetActive(false);
-                Destroy(volcanoParticleSystemInstance); // Destroy the instantiated particle system
+                ambiantParticleSystem.Stop();
+                activeParticleSystem.Stop();
+                ambiantParticleSystem.gameObject.SetActive(false);
+                activeParticleSystem.gameObject.SetActive(false);
             }
 
             GameManager.Instance.EventActive = false;
-            GameManager.Instance.ResetEventThreshold();
+            // GameManager.Instance.ResetEventThreshold(); // Comment out this line to keep the threshold rising
         }
     }
 }

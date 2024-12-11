@@ -68,8 +68,9 @@ public class Bloc : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("hihihi");
-        if (GameManager.Instance.EventActive && GameManager.Instance._currentEvent.eventName == "Volcano")
+        if (GameManager.Instance.EventActive && GameManager.Instance._currentEvent.eventName == "Volcano" && this.gameObject.CompareTag("Solid"))
         {
+            Destroy(other.gameObject);
             Destroy(this.gameObject);
             GameManager.Instance.RemoveBloc(this);
             GameManager.Instance.BlocksDestroyed++;

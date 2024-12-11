@@ -19,7 +19,7 @@ namespace Elias.Scripts.Managers
         private float _height = 0;
         private int _score = 0;
         private int _allBlocCount = 0;
-        private int _eventTreshold = 50;
+        private int _eventTreshold = 10;
 
         private float _initialHeightTreshold = 10f;
         private float _initiaScoretreshold = 10f;
@@ -52,6 +52,15 @@ namespace Elias.Scripts.Managers
 
         private CardSO _pendingCard; // Store the card to be added if deck is full
         private bool _isReplacingCard; // Flag to track if we're in replacement mode
+
+        public ParticleSystem VolcanoPS;
+        public ParticleSystem TempestPS;
+        public ParticleSystem RainPS;
+        public ParticleSystem WindPS;
+        public ParticleSystem BlizzardPS;
+        
+        public ParticleSystem MeteorPS;
+        public ParticleSystem LightningPS;
 
         public float Height
         {
@@ -135,6 +144,7 @@ namespace Elias.Scripts.Managers
 
             if (_allBlocCount >= _eventTreshold && !EventActive)
             {
+                Debug.Log("le grande evenementeeeeeee");
                 EventTrigger(_currentEvent);
             }
 
@@ -341,8 +351,11 @@ namespace Elias.Scripts.Managers
 
         public void EventTrigger(EventSO phaseEvent)
         {
-            _eventTreshold += 15;
-            phaseEvent.TriggerEvent();
+            if (!EventActive)
+            {
+                _eventTreshold += 15;
+                phaseEvent.TriggerEvent();
+            }
         }
 
         public void PhaseTrigger()
@@ -388,19 +401,12 @@ namespace Elias.Scripts.Managers
             {
                 Destroy(_currentPS.gameObject);
             }
-
-            if (eventSO.particleSystem != null)
-            {
-                _currentPS = Instantiate(eventSO.particleSystem, Vector3.zero, Quaternion.identity);
-            }
         }
 
         public void ResetEventThreshold()
         {
             _eventTreshold = 15;
         }
-
-        
 
         public void FreezeEveryFifteenBlocks()
         {

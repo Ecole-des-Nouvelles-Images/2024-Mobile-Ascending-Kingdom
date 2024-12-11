@@ -8,9 +8,11 @@ namespace Elias.Scripts.Event
         public string eventName;
         public Sprite eventBackground;
         public AudioClip eventSound;
-        public ParticleSystem particleSystem;
         public Shader shader;
         public int eventBlockDuration;
+
+        protected ParticleSystem ambiantParticleSystem;
+        protected ParticleSystem activeParticleSystem;
 
         public virtual void TriggerEvent()
         {

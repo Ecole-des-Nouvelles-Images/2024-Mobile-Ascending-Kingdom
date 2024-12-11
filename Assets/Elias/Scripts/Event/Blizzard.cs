@@ -15,6 +15,14 @@ namespace Elias.Scripts.Event
         {
             Debug.Log("Blizzard Event Triggered!");
             GameManager.Instance.EventActive = true;
+
+            ambiantParticleSystem = GameManager.Instance.BlizzardPS;
+            if (ambiantParticleSystem != null)
+            {
+                ambiantParticleSystem.gameObject.SetActive(true);
+                ambiantParticleSystem.Play();
+            }
+
             GameManager.Instance.StartCoroutine(ApplyBlizzardEffect());
         }
 
@@ -32,7 +40,12 @@ namespace Elias.Scripts.Event
                 blizzardCount--;
             }
 
-            // Revert the values for future blocks
+            if (ambiantParticleSystem != null)
+            {
+                ambiantParticleSystem.Stop();
+                ambiantParticleSystem.gameObject.SetActive(false);
+            }
+
             GameManager.Instance.OnBlocListUpdated += RevertBlizzardEffect;
         }
 

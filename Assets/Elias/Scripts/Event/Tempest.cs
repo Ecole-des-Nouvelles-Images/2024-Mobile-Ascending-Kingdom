@@ -7,30 +7,35 @@ namespace Elias.Scripts.Event
     [CreateAssetMenu(fileName = "Tempest", menuName = "Events/Tempest")]
     public class Tempest : EventSO
     {
-        public GameObject tempestParticlePrefab; // Reference to the Tempest particle system prefab
-        private GameObject tempestParticleSystemInstance; // The instantiated particle system object
+        private ParticleSystem ambientParticleSystem1;
+        private ParticleSystem ambientParticleSystem2;
 
         public override void TriggerEvent()
         {
-            if (tempestParticlePrefab == null)
-            {
-                Debug.LogError("tempestParticlePrefab is not assigned in the GameManager!");
-                return;
-            }
-
             Debug.Log("Tempest Event Triggered!");
             GameManager.Instance.EventActive = true;
             GameManager.Instance.BlocksChanged = 0; // Reset the counter
 
-            // Instantiate the Tempest particle system prefab
-            tempestParticleSystemInstance = Instantiate(tempestParticlePrefab);
-            tempestParticleSystemInstance.SetActive(true);
+            ambientParticleSystem1 = GameManager.Instance.RainPS;
+            ambientParticleSystem2 = GameManager.Instance.TempestPS; // Assuming you have a second particle system reference
 
-            // Ensure the Particle System is playing
-            ParticleSystem ps = tempestParticleSystemInstance.GetComponent<ParticleSystem>();
-            if (ps != null && !ps.isPlaying)
+            activeParticleSystem = GameManager.Instance.LightningPS;
+            
+            if (ambientParticleSystem1 != null)
             {
-                ps.Play();
+                ambientParticleSystem1.gameObject.SetActive(true);
+                ambientParticleSystem1.Play();
+            }
+
+            if (ambientParticleSystem2 != null)
+            {
+                ambientParticleSystem2.gameObject.SetActive(true);
+                ambientParticleSystem2.Play();
+            }
+            if (activeParticleSystem != null)
+            {
+                activeParticleSystem.gameObject.SetActive(true);
+                activeParticleSystem.Play();
             }
 
             GameManager.Instance.StartCoroutine(ApplyTempestEffect());
@@ -38,23 +43,26 @@ namespace Elias.Scripts.Event
 
         private IEnumerator ApplyTempestEffect()
         {
-            // Wait until the BlocksChanged condition is met (when blocks are affected)
             yield return new WaitUntil(() => GameManager.Instance.BlocksChanged > 0);
 
-            // Stop the tempest particle system when the event ends
-            if (tempestParticleSystemInstance != null)
+            if (ambientParticleSystem1 != null)
             {
-                ParticleSystem ps = tempestParticleSystemInstance.GetComponent<ParticleSystem>();
-                if (ps != null && ps.isPlaying)
-                {
-                    ps.Stop();
-                }
-
-                tempestParticleSystemInstance.SetActive(false);
-                Destroy(tempestParticleSystemInstance); // Destroy the instantiated particle system
+                ambientParticleSystem1.Stop();
+                ambientParticleSystem1.gameObject.SetActive(false);
             }
 
-            // Reset the event status
+            if (ambientParticleSystem2 != null)
+            {
+                ambientParticleSystem2.Stop();
+                ambientParticleSystem2.gameObject.SetActive(false);
+            }
+
+            if (activeParticleSystem != null)
+            {
+                activeParticleSystem.Stop();
+                activeParticleSystem.gameObject.SetActive(false);
+            }
+
             GameManager.Instance.EventActive = false;
             GameManager.Instance.ResetEventThreshold();
         }
