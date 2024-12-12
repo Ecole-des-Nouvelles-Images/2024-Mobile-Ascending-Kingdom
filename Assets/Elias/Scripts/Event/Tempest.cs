@@ -43,7 +43,7 @@ namespace Elias.Scripts.Event
 
         private IEnumerator ApplyTempestEffect()
         {
-            yield return new WaitUntil(() => GameManager.Instance.BlocksChanged > 0);
+            yield return new WaitUntil(() => GameManager.Instance.BlocksChanged > 10);
 
             if (ambientParticleSystem1 != null)
             {

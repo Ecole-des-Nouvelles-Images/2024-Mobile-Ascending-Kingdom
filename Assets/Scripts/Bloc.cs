@@ -75,16 +75,13 @@ public class Bloc : MonoBehaviour
             GameManager.Instance.RemoveBloc(this);
             GameManager.Instance.BlocksDestroyed++;
         }
-        if (GameManager.Instance.EventActive && GameManager.Instance._currentEvent.eventName == "Tempest")
+        if (GameManager.Instance.EventActive && GameManager.Instance._currentEvent.eventName == "Tempest" && this.gameObject.CompareTag("Solid"))
         {
             if (_cubeSpawner != null && _cubeSpawner.cubeModels.Count > 0)
             {
-                int randomIndex = Random.Range(0, _cubeSpawner.cubeModels.Count);
-                GameObject newModel = _cubeSpawner.cubeModels[randomIndex];
-                MeshFilter meshFilter = GetComponent<MeshFilter>();
-                meshFilter.mesh = newModel.GetComponent<MeshFilter>().sharedMesh;
-                MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-                meshRenderer.material = newModel.GetComponent<MeshRenderer>().sharedMaterial;
+                
+                Vector3 forceDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(0.5f, 1f), Random.Range(-1f, 1f)).normalized;
+                Rigidbody.AddForce(forceDirection * 30f, ForceMode.Impulse);
                 GameManager.Instance.BlocksChanged++;
             }
         }

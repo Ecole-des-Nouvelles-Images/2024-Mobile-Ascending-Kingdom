@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6c08ecfb734f8693c07830c2420536, type: 3}
+  m_Name: EmperorCard
+  m_EditorClassIdentifier: 
+  cardName: The Emperor
+  cardDescription: Represents authority, establishment, and structure.
+  cardImage: {fileID: 21300000, guid: e024830b84b139141a51ff949c9c8e16, type: 3}
+  isCardActive: 0

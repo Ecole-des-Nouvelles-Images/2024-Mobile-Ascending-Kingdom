@@ -19,11 +19,11 @@ namespace Elias.Scripts.Managers
         private float _height = 0;
         private int _score = 0;
         private int _allBlocCount = 0;
-        private int _eventTreshold = 10;
+        private int _eventTreshold = 2;
 
-        private float _initialHeightTreshold = 10f;
+        private float _initialHeightTreshold = 3f;
         private float _initiaScoretreshold = 10f;
-        private float _initiaPhaseTreshold = 50f;
+        private float _initiaPhaseTreshold = 5f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
@@ -45,6 +45,11 @@ namespace Elias.Scripts.Managers
         public GameObject currentBackgroundObject;
         private ParticleSystem _currentPS;
 
+        public CardSO Fool;
+        public CardSO Empress;
+        public CardSO Emperor;
+        public CardSO Moon;
+
         public EventSO VolcanoEvent;
         public EventSO TempestEvent;
         public EventSO WindEvent;
@@ -58,9 +63,11 @@ namespace Elias.Scripts.Managers
         public ParticleSystem RainPS;
         public ParticleSystem WindPS;
         public ParticleSystem BlizzardPS;
-        
+
         public ParticleSystem MeteorPS;
         public ParticleSystem LightningPS;
+
+        public MeterorSpawning MeterorSpawningObj;
 
         public float Height
         {
@@ -90,25 +97,21 @@ namespace Elias.Scripts.Managers
             _currentScoreTreshold = _initiaScoretreshold;
             _currentPhaseTreshold = _initiaPhaseTreshold;
 
+            // Add public CardSO instances to the pool
             _poolCards = new List<CardSO>
             {
-                //ScriptableObject.CreateInstance<Fool>(),
-                //ScriptableObject.CreateInstance<World>(),
-                //ScriptableObject.CreateInstance<Devil>(),
-                ScriptableObject.CreateInstance<Sun>(),
-                ScriptableObject.CreateInstance<Moon>(),
-                ScriptableObject.CreateInstance<Death>(),
-                ScriptableObject.CreateInstance<Emperor>(),
-                //ScriptableObject.CreateInstance<Empress>(),
-                ScriptableObject.CreateInstance<Tower>(),
+                Fool,
+                Moon,
+                Emperor,
+                Empress
             };
 
             _allEvents = new List<EventSO>
             {
-                VolcanoEvent,
                 TempestEvent,
+                VolcanoEvent,
                 WindEvent,
-                BlizzardEvent
+                BlizzardEvent,
             };
 
             if (_allEvents.Count > 0)
@@ -134,6 +137,7 @@ namespace Elias.Scripts.Managers
         {
             if (_height >= _currentHeightTreshold || _score >= _currentScoreTreshold)
             {
+                Debug.Log("eeeeeeeeeeeeee");
                 CardTrigger();
             }
 
@@ -247,7 +251,10 @@ namespace Elias.Scripts.Managers
                 {
                     Button button = _cardButtons[i];
                     CardSO card = _displayedCards[i];
-                    button.image.sprite = card.cardImage;
+                    
+                    Image imageComponent = button.GetComponentInChildren<Image>();
+
+                    imageComponent.sprite = card.cardImage;
 
                     TMP_Text[] textComponents = button.GetComponentsInChildren<TMP_Text>();
 
@@ -353,7 +360,6 @@ namespace Elias.Scripts.Managers
         {
             if (!EventActive)
             {
-                _eventTreshold += 15;
                 phaseEvent.TriggerEvent();
             }
         }
@@ -405,7 +411,7 @@ namespace Elias.Scripts.Managers
 
         public void ResetEventThreshold()
         {
-            _eventTreshold = 15;
+            _eventTreshold += 15;
         }
 
         public void FreezeEveryFifteenBlocks()
