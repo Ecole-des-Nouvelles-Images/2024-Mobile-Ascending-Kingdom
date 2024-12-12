@@ -151,7 +151,7 @@ MonoBehaviour:
   _speed: 5
   Freeze: 0
   GoDown: 0
-  Shape: I
+  Shape: Ialt
   Vines: {fileID: 1043052353349284889}
 --- !u!1 &1043052353349284889
 GameObject:

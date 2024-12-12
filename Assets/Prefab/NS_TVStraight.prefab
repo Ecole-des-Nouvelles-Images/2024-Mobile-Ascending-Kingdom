@@ -173,7 +173,7 @@ MonoBehaviour:
   _speed: 5
   Freeze: 0
   GoDown: 0
-  Shape: T
+  Shape: Talt
   Vines: {fileID: 6371873999436483027}
 --- !u!1 &3416230611192269963
 GameObject:

@@ -583,6 +583,7 @@ MonoBehaviour:
   - 270
   cameraObject: {fileID: 2004278810}
   lastCube: {fileID: 0}
+  Indicator: {fileID: 301229595}
   AutoStart: 1
 --- !u!114 &1128565146
 MonoBehaviour:
