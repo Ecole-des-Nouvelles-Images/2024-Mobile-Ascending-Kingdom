@@ -16,7 +16,9 @@ public class Bloc : MonoBehaviour
     private MeshRenderer _meshRenderer;
     public bool GoDown;
     private CubeSpawner _cubeSpawner;
-    public string shape;
+    [FormerlySerializedAs("shape")] public string Shape;
+    public GameObject Vines;
+    public GameObject Dust;
 
     private void Awake()
     {
@@ -56,6 +58,7 @@ public class Bloc : MonoBehaviour
         Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         Rigidbody.useGravity = false;
         SetShaderBool("_ISFREEZED");
+        StartCoroutine("FreezeAnimation");
         Freeze = false;
     }
 
@@ -80,6 +83,10 @@ public class Bloc : MonoBehaviour
         CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
         spawner.CubeCount += 1;
         spawner.SpawnCubeMethod();
+        Bounds bounds = _meshRenderer.bounds;
+        Vector3 lowestPoint = bounds.min;
+        GameObject dustGo = Instantiate(Dust,new Vector3(transform.position.x,lowestPoint.y,transform.position.z), Quaternion.identity, null);
+        StartCoroutine(DustDestroyer(dustGo));
     }
 
     private void OnParticleCollision(GameObject other)
@@ -101,4 +108,36 @@ public class Bloc : MonoBehaviour
             }
         }
     }
+    private IEnumerator FreezeAnimation()
+    {
+        float vineAmountStep = 0.1f;
+        float vineAmount = 0.1f;
+        float scaleStep = 0.1f;
+        float scale = 0.1f;
+
+        // Animation de _VineAmount
+        for (int i = 0; i < 10; i++)
+        {
+            _meshRenderer.material.SetFloat("_VineAmount", vineAmount);
+            vineAmount += vineAmountStep;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        Vines.SetActive(true);
+
+        // Animation de l'échelle des Vines
+        for (int i = 0; i < 10; i++)
+        {
+            Vines.transform.localScale = new Vector3(scale, scale, scale);
+            scale += scaleStep;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator DustDestroyer(GameObject dustGameObject)
+    {
+        yield return new WaitForSeconds(2f);
+        DestroyImmediate(dustGameObject);
+    }
+
 }

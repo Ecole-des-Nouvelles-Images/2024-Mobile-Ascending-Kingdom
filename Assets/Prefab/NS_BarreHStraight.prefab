@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 4002204631898112049}
   - component: {fileID: 5026842241128423998}
   - component: {fileID: 7959102670702417922}
-  - component: {fileID: 7527697357586181502}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: P_Leave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,28 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7527697357586181502
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254323551414041752}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1908266946185936093
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,9 +94,8 @@ GameObject:
   - component: {fileID: 497410359789947814}
   - component: {fileID: 9000915242542078253}
   - component: {fileID: 6523088029014828749}
-  - component: {fileID: 6464287321313505019}
   m_Layer: 0
-  m_Name: Plane (2)
+  m_Name: P_Leave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,28 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6464287321313505019
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908266946185936093}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2143998633394811795
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,9 +177,8 @@ GameObject:
   - component: {fileID: 1526650793502773113}
   - component: {fileID: 8611694403400380454}
   - component: {fileID: 1091196865381713310}
-  - component: {fileID: 7343636792632651098}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: P_Leave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,28 +249,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7343636792632651098
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143998633394811795}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &6120781704703449302
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5669242375005676141}
   m_Layer: 0
-  m_Name: Leaves
+  m_Name: Vines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,4 +434,6 @@ MonoBehaviour:
   _speed: 5
   Freeze: 0
   GoDown: 0
-  shape: I
+  Shape: I
+  Vines: {fileID: 6120781704703449302}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}

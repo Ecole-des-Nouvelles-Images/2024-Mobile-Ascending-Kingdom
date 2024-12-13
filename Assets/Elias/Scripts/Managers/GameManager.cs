@@ -389,7 +389,7 @@ namespace Elias.Scripts.Managers
 
             ChangeBackgroundAndEvent();
         }
-
+        
         private void InitializeBackgroundSequence()
         {
             if (_currentEvent != null)
@@ -424,7 +424,22 @@ namespace Elias.Scripts.Managers
 
         public void ResetEventThreshold()
         {
-            _eventTreshold += 15;
+            _eventTreshold = 15;
+        }
+
+        public void FreezeCubesWithIvy()
+        {
+            List<Bloc> blocsToFreeze = new List<Bloc>();
+
+            foreach (Bloc bloc in Blocs)
+            {
+                if (bloc.Shape == "L" || bloc.Shape == "La" || bloc.Shape == "Z" || bloc.Shape == "Za" || bloc.Shape == "O" || bloc.Shape == "I" || bloc.Shape == "T")
+                {
+                    blocsToFreeze.Add(bloc);
+                }
+            }
+
+            cubeSpawner.FreezeCubes(blocsToFreeze);
         }
 
         public void FreezeEveryFifteenBlocks()
@@ -447,7 +462,7 @@ namespace Elias.Scripts.Managers
                 Bloc nextBloc = Blocs[i + 1];
                 Bloc nextNextBloc = Blocs[i + 2];
 
-                if (currentBloc.shape == nextBloc.shape && nextBloc.shape == nextNextBloc.shape)
+                if (currentBloc.Shape == nextBloc.Shape && nextBloc.Shape == nextNextBloc.Shape)
                 {
                     blocsToRemove.Add(currentBloc);
                     blocsToRemove.Add(nextBloc);
