@@ -125,7 +125,6 @@ namespace Proto.Script
                     { 360f, new Vector3(0,0,0.5f)}
                 }
             },
-            // Ajoutez d'autres modèles et rotations ici
         };
 
         private void Awake()

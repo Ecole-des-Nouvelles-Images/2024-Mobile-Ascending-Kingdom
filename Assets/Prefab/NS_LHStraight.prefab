@@ -341,6 +341,7 @@ MonoBehaviour:
   GoDown: 0
   Shape: Lalt
   Vines: {fileID: 7015577288452978641}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}
 --- !u!1 &6661038501421649647
 GameObject:
   m_ObjectHideFlags: 0

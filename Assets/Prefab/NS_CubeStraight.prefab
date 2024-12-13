@@ -402,6 +402,7 @@ MonoBehaviour:
   GoDown: 0
   Shape: O
   Vines: {fileID: 8410483064308243173}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}
 --- !u!1 &8410483064308243173
 GameObject:
   m_ObjectHideFlags: 0

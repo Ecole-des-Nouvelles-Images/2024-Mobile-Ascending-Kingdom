@@ -17,6 +17,7 @@ public class Bloc : MonoBehaviour
     private CubeSpawner _cubeSpawner;
     [FormerlySerializedAs("shape")] public string Shape;
     public GameObject Vines;
+    public GameObject Dust;
 
     private void Awake() {
         Rigidbody = GetComponent<Rigidbody>();
@@ -65,6 +66,10 @@ public class Bloc : MonoBehaviour
         CubeSpawner spawner = FindObjectOfType<CubeSpawner>();
         spawner.CubeCount += 1;
         spawner.SpawnCubeMethod();
+        Bounds bounds = _meshRenderer.bounds;
+        Vector3 lowestPoint = bounds.min;
+        GameObject dustGo = Instantiate(Dust,new Vector3(transform.position.x,lowestPoint.y,transform.position.z), Quaternion.identity, null);
+        StartCoroutine(DustDestroyer(dustGo));
     }
 
     private void OnParticleCollision(GameObject other)
@@ -92,34 +97,34 @@ public class Bloc : MonoBehaviour
     }
     private IEnumerator FreezeAnimation()
     {
-            _meshRenderer.material.SetFloat("_VineAmount", 0.1f);
+        float vineAmountStep = 0.1f;
+        float vineAmount = 0.1f;
+        float scaleStep = 0.1f;
+        float scale = 0.1f;
+
+        // Animation de _VineAmount
+        for (int i = 0; i < 10; i++)
+        {
+            _meshRenderer.material.SetFloat("_VineAmount", vineAmount);
+            vineAmount += vineAmountStep;
             yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.2f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.3f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.4f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.5f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.6f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.7f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.8f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 0.9f);
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.material.SetFloat("_VineAmount", 1f);
-            Vines.SetActive(true);
-            Vines.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        }
+
+        Vines.SetActive(true);
+
+        // Animation de l'échelle des Vines
+        for (int i = 0; i < 10; i++)
+        {
+            Vines.transform.localScale = new Vector3(scale, scale, scale);
+            scale += scaleStep;
             yield return new WaitForSeconds(0.1f);
-            Vines.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-            yield return new WaitForSeconds(0.1f);
-            Vines.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            yield return new WaitForSeconds(0.1f);
-            Vines.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-            yield return new WaitForSeconds(0.1f);
-            Vines.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
     }
+
+    private IEnumerator DustDestroyer(GameObject dustGameObject)
+    {
+        yield return new WaitForSeconds(2f);
+        DestroyImmediate(dustGameObject);
+    }
+
 }

@@ -436,3 +436,4 @@ MonoBehaviour:
   GoDown: 0
   Shape: I
   Vines: {fileID: 6120781704703449302}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}

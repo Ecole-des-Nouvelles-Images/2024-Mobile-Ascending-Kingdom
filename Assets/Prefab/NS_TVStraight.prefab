@@ -175,6 +175,7 @@ MonoBehaviour:
   GoDown: 0
   Shape: Talt
   Vines: {fileID: 6371873999436483027}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}
 --- !u!1 &3416230611192269963
 GameObject:
   m_ObjectHideFlags: 0

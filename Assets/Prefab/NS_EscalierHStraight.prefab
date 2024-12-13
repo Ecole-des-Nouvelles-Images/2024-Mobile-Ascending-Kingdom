@@ -292,6 +292,7 @@ MonoBehaviour:
   GoDown: 0
   Shape: Zalt
   Vines: {fileID: 816704925689351086}
+  Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}
 --- !u!1 &4330665705630712768
 GameObject:
   m_ObjectHideFlags: 0
