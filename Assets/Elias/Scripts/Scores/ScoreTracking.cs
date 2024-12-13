@@ -20,7 +20,7 @@ namespace Elias.Scripts.Scores
 
         private void UpdateScoreText()
         {
-            ScoreText.text = "Score: " + GameManager.Instance.Score;
+            ScoreText.text = GameManager.Instance.Score + " pts" ;
         }
     }
 }

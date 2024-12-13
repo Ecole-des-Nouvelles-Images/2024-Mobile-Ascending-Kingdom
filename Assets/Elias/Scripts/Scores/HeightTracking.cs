@@ -20,7 +20,7 @@ namespace Elias.Scripts.Scores
 
         private void UpdateHeightText()
         {
-            HeightText.text = "Height: " + Mathf.FloorToInt(GameManager.Instance.Height).ToString();
+            HeightText.text = Mathf.FloorToInt(GameManager.Instance.Height).ToString() + " m";
         }
     }
 }
