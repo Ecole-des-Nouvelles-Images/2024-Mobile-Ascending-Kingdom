@@ -8,7 +8,7 @@ namespace Elias.Scripts.Event
     public class Wind : EventSO
     {
         public float duration = 5f; // Duration of the wind event
-        public float horizontalForce = 0.1f; // Force applied horizontally
+        public float horizontalForce = 0.05f; // Force applied horizontally
         public Vector3 forceDirection = Vector3.right; // Direction of the force
 
         public override void TriggerEvent()
@@ -45,7 +45,7 @@ namespace Elias.Scripts.Event
             }
 
             GameManager.Instance.EventActive = false;
-            // GameManager.Instance.ResetEventThreshold(); // Comment out this line to keep the threshold rising
+            GameManager.Instance.ResetEventThreshold(); // Comment out this line to keep the threshold rising
         }
     }
 }

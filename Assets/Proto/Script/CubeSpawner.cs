@@ -18,9 +18,12 @@ namespace Proto.Script
         public Bloc lastCube;
 
         public bool AutoStart;
+        
+        public bool isPaused = false;
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             CubeCount = 0;
             CubeLimit = -1;
         }
@@ -35,7 +38,7 @@ namespace Proto.Script
 
         private void Update()
         {
-            if (SpawnCube)
+            if (!isPaused && SpawnCube)
             {
                 if (GameManager.Instance.GetBlocCount() > 0 && GameManager.Instance.Blocs[^1].CompareTag("Solid"))
                 {
@@ -100,5 +103,9 @@ namespace Proto.Script
                 cube.Freeze = true;
             }
         }
+        
+        
     }
+    
+    
 }

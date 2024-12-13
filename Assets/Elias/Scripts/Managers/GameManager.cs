@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Elias.Scripts.Cards;
 using Elias.Scripts.Event;
@@ -19,11 +20,11 @@ namespace Elias.Scripts.Managers
         private float _height = 0;
         private int _score = 0;
         private int _allBlocCount = 0;
-        private int _eventTreshold = 2;
+        private int _eventTreshold = 15;
 
-        private float _initialHeightTreshold = 3f;
-        private float _initiaScoretreshold = 10f;
-        private float _initiaPhaseTreshold = 5f;
+        private float _initialHeightTreshold = 15f;
+        private float _initiaScoretreshold = 5f;
+        private float _initiaPhaseTreshold = 50f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
@@ -91,8 +92,15 @@ namespace Elias.Scripts.Managers
         public UnityAction OnHeightUpdated;
         public UnityAction OnScoreUpdated;
 
+
+        private void Awake()
+        {
+        }
+
         private void Start()
         {
+            cubeSpawner = FindObjectOfType<CubeSpawner>();
+            
             _currentHeightTreshold = _initialHeightTreshold;
             _currentScoreTreshold = _initiaScoretreshold;
             _currentPhaseTreshold = _initiaPhaseTreshold;
@@ -108,10 +116,11 @@ namespace Elias.Scripts.Managers
 
             _allEvents = new List<EventSO>
             {
+                BlizzardEvent,
                 TempestEvent,
                 VolcanoEvent,
                 WindEvent,
-                BlizzardEvent,
+                
             };
 
             if (_allEvents.Count > 0)
@@ -137,7 +146,6 @@ namespace Elias.Scripts.Managers
         {
             if (_height >= _currentHeightTreshold || _score >= _currentScoreTreshold)
             {
-                Debug.Log("eeeeeeeeeeeeee");
                 CardTrigger();
             }
 
@@ -148,7 +156,6 @@ namespace Elias.Scripts.Managers
 
             if (_allBlocCount >= _eventTreshold && !EventActive)
             {
-                Debug.Log("le grande evenementeeeeeee");
                 EventTrigger(_currentEvent);
             }
 
@@ -160,8 +167,7 @@ namespace Elias.Scripts.Managers
 
         private void TestEvent()
         {
-            Debug.Log("Testing Wind Event Triggered!");
-            VolcanoEvent.TriggerEvent();
+            _currentEvent.TriggerEvent();
         }
 
         public void AddBloc(Bloc piece)
@@ -226,7 +232,10 @@ namespace Elias.Scripts.Managers
 
         public void CardTrigger()
         {
+            cubeSpawner.isPaused = true;
             Debug.Log("Card triggered");
+            
+            cardPanel.SetActive(true);
 
             _currentHeightTreshold = (_currentHeightTreshold + (_initialHeightTreshold * 1.1f));
             _currentScoreTreshold = (_currentScoreTreshold + (_initiaScoretreshold * 1.1f));
@@ -234,7 +243,7 @@ namespace Elias.Scripts.Managers
             Debug.Log("Current score: " + _currentScoreTreshold);
             Debug.Log("Current height: " + _currentHeightTreshold);
 
-            cardPanel.SetActive(true);
+            
 
             _displayedCards.Clear();
             for (int i = 0; i < 3 && _poolCards.Count > 0; i++)
@@ -329,6 +338,7 @@ namespace Elias.Scripts.Managers
             AddCardToDeck(_pendingCard);
             _pendingCard = null;
             _isReplacingCard = false;
+            cubeSpawner.isPaused = false;
             cardPanel.SetActive(false);
         }
 
@@ -345,6 +355,7 @@ namespace Elias.Scripts.Managers
             }
             _displayedCards.Clear();
 
+            cubeSpawner.isPaused = false;
             cardPanel.SetActive(false);
         }
 

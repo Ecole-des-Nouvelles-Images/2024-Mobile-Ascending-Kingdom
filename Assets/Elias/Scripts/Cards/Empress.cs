@@ -17,17 +17,7 @@ namespace Elias.Scripts.Cards
         {
             if (isCardActive)
             {
-                List<Bloc> blocsToFreeze = new List<Bloc>();
-
-                foreach (Bloc bloc in GameManager.Instance.Blocs)
-                {
-                    if (bloc.shape == "L" || bloc.shape == "La" || bloc.shape == "Z" || bloc.shape == "Za" || bloc.shape == "O" || bloc.shape == "I" || bloc.shape == "T")
-                    {
-                        blocsToFreeze.Add(bloc);
-                    }
-                }
-
-                GameManager.Instance.cubeSpawner.FreezeCubes(blocsToFreeze);
+                
                 
             }
         }
