@@ -252,9 +252,11 @@ namespace Elias.Scripts.Managers
                     Button button = _cardButtons[i];
                     CardSO card = _displayedCards[i];
                     
-                    Image imageComponent = button.GetComponentInChildren<Image>();
-
-                    imageComponent.sprite = card.cardImage;
+                    Image[] imageComponents = button.GetComponentsInChildren<Image>();
+                    if (imageComponents.Length >= 2)
+                    {
+                        imageComponents[1].sprite = card.cardImage;
+                    }
 
                     TMP_Text[] textComponents = button.GetComponentsInChildren<TMP_Text>();
 

@@ -9,8 +9,8 @@ namespace Elias.Scripts.Cards
     {
         private void OnEnable()
         {
-            cardName = "The Fool";
-            cardDescription = "Represents new beginnings, faith, and spontaneity.";
+            cardName = "Le Mat";
+            cardDescription = "";
         }
 
         public override void OnBlocListUpdated()
