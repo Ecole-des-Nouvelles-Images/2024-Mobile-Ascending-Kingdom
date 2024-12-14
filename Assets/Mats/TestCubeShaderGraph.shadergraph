@@ -20,6 +20,15 @@
         },
         {
             "m_Id": "5149335c6c054ef2b285fc98d013cbb0"
+        },
+        {
+            "m_Id": "728502479c8247b5aba86d3e3e7fda24"
+        },
+        {
+            "m_Id": "746345543faf43abb578c21e92f0df34"
+        },
+        {
+            "m_Id": "a7e9af3495894b35a32ab28003145919"
         }
     ],
     "m_Keywords": [
@@ -678,8 +687,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 495.9998474121094,
-            "y": 646.0
+            "x": 973.0,
+            "y": 627.0
         },
         "m_Blocks": [
             {
@@ -695,8 +704,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 495.9998474121094,
-            "y": 845.9999389648438
+            "x": 973.0,
+            "y": 827.0
         },
         "m_Blocks": [
             {
@@ -2489,7 +2498,7 @@
     "m_KeywordScope": 0,
     "m_KeywordStages": 63,
     "m_Entries": [],
-    "m_Value": 0,
+    "m_Value": 1,
     "m_IsEditable": true
 }
 
@@ -2968,6 +2977,36 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "728502479c8247b5aba86d3e3e7fda24",
+    "m_Guid": {
+        "m_GuidSerialized": "a937c1ef-6d58-4abd-9ba6-c89e1cd7d62e"
+    },
+    "m_Name": "VineNormal2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "VineNormal2",
+    "m_DefaultReferenceName": "_VineNormal2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"64d45b8975b57864988688c3b4658791\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "732a483119d940e190b7e4559a13ada8",
     "m_Id": 2,
@@ -3002,10 +3041,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -532.4500732421875,
-            "y": -42.54997634887695,
-            "width": 0.0,
-            "height": 0.0
+            "x": -511.0,
+            "y": -33.00000762939453,
+            "width": 208.0,
+            "height": 302.0
         }
     },
     "m_Slots": [
@@ -3030,6 +3069,36 @@
     "m_Keyword": {
         "m_Id": "5920420902f34617b4dee62d0072d8af"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "746345543faf43abb578c21e92f0df34",
+    "m_Guid": {
+        "m_GuidSerialized": "c5055b7b-9c3e-4628-ab46-9a359dcce55a"
+    },
+    "m_Name": "VineMask2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "VineMask2",
+    "m_DefaultReferenceName": "_VineMask2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"9522b6ef094c72a49ba57295d334198d\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
 }
 
 {
@@ -3784,6 +3853,36 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "a7e9af3495894b35a32ab28003145919",
+    "m_Guid": {
+        "m_GuidSerialized": "d0447501-338e-4459-9b81-2bbc98ef321a"
+    },
+    "m_Name": "VineTex2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "VineTex2",
+    "m_DefaultReferenceName": "_VineTex2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"8092e6ea31bf99b4c8b89a1399c34634\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "aa581d5b4c674fec901f871df4f42d8a",
     "m_Group": {
@@ -4026,6 +4125,15 @@
         },
         {
             "m_Id": "5149335c6c054ef2b285fc98d013cbb0"
+        },
+        {
+            "m_Id": "728502479c8247b5aba86d3e3e7fda24"
+        },
+        {
+            "m_Id": "746345543faf43abb578c21e92f0df34"
+        },
+        {
+            "m_Id": "a7e9af3495894b35a32ab28003145919"
         }
     ]
 }

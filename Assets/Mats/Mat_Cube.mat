@@ -12,8 +12,7 @@ Material:
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ISFREEZED
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -46,8 +45,20 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4dc762f475fd3cb4bb277469fb9453e4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _VineMask2:
+        m_Texture: {fileID: 2800000, guid: 9522b6ef094c72a49ba57295d334198d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _VineNormal:
         m_Texture: {fileID: 2800000, guid: cd8ffebf507469b468e6b22339ec00be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _VineNormal2:
+        m_Texture: {fileID: 2800000, guid: 64d45b8975b57864988688c3b4658791, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _VineTex2:
+        m_Texture: {fileID: 2800000, guid: 8092e6ea31bf99b4c8b89a1399c34634, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -71,7 +82,7 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 0
-    - _ISFREEZED: 1
+    - _ISFREEZED: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
