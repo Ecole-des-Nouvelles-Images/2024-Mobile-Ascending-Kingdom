@@ -27,7 +27,7 @@ namespace Elias.Scripts.Cards
 
             foreach (Bloc bloc in GameManager.Instance.Blocs)
             {
-                if (bloc.CompareTag("Solid"))
+                if (bloc.CompareTag("Solid") && !bloc.IsFrozen)
                 {
                     List<Bloc> adjacentBlocs = GetAdjacentSolidBlocs(bloc);
                     if (adjacentBlocs.Count >= 2)
@@ -56,6 +56,10 @@ namespace Elias.Scripts.Cards
             if (blocsToFreeze.Count >= 3)
             {
                 GameManager.Instance.cubeSpawner.FreezeCubes(blocsToFreeze);
+                foreach (Bloc bloc in blocsToFreeze)
+                {
+                    bloc.IsFrozen = true;
+                }
             }
         }
 
@@ -64,15 +68,14 @@ namespace Elias.Scripts.Cards
             List<Bloc> adjacentBlocs = new List<Bloc>();
             Vector3 blocPosition = bloc.transform.position;
 
-            foreach (Bloc otherBloc in GameManager.Instance.Blocs)
+            Collider[] colliders = Physics.OverlapSphere(blocPosition, 1.5f);
+
+            foreach (Collider collider in colliders)
             {
-                if (otherBloc != bloc && otherBloc.CompareTag("Solid"))
+                Bloc otherBloc = collider.GetComponent<Bloc>();
+                if (otherBloc != null && otherBloc != bloc && otherBloc.CompareTag("Solid") && !otherBloc.IsFrozen)
                 {
-                    Vector3 otherBlocPosition = otherBloc.transform.position;
-                    if (Vector3.Distance(blocPosition, otherBlocPosition) <= 1.5f) // Adjust the distance threshold as needed
-                    {
-                        adjacentBlocs.Add(otherBloc);
-                    }
+                    adjacentBlocs.Add(otherBloc);
                 }
             }
 

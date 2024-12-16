@@ -5,7 +5,7 @@ namespace Elias.Scripts.Camera
 {
     public class CameraShake : MonoBehaviour
     {
-        public float shakeDuration = 1f;
+        public float shakeDuration = 0.1f;
         public float shakeStrength = 0.5f;
         public CinemachineTargetGroup targetGroup;
 
@@ -21,11 +21,6 @@ namespace Elias.Scripts.Camera
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                StartShake();
-            }
-
             if (_shakeTimer > 0)
             {
                 _shakeTimer -= Time.deltaTime;
