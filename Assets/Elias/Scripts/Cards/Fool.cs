@@ -3,14 +3,13 @@ using UnityEngine;
 
 namespace Elias.Scripts.Cards
 {
-
     [CreateAssetMenu(fileName = "FoolCard", menuName = "Cards/Fool Card")]
     public class Fool : CardSO
     {
         private void OnEnable()
         {
             cardName = "Le Mat";
-            cardDescription = "";
+            cardDescription = "Détruit trois blocs adjacent de même forme";
         }
 
         public override void OnBlocListUpdated()

@@ -95,6 +95,7 @@ namespace Elias.Scripts.Managers
 
         private void Awake()
         {
+            cardPanel = GameObject.FindGameObjectWithTag("CardPanel");
         }
 
         private void Start()
@@ -424,49 +425,39 @@ namespace Elias.Scripts.Managers
 
         public void ResetEventThreshold()
         {
-            _eventTreshold = 15;
-        }
-
-        public void FreezeCubesWithIvy()
-        {
-            List<Bloc> blocsToFreeze = new List<Bloc>();
-
-            foreach (Bloc bloc in Blocs)
-            {
-                if (bloc.Shape == "L" || bloc.Shape == "La" || bloc.Shape == "Z" || bloc.Shape == "Za" || bloc.Shape == "O" || bloc.Shape == "I" || bloc.Shape == "T")
-                {
-                    blocsToFreeze.Add(bloc);
-                }
-            }
-
-            cubeSpawner.FreezeCubes(blocsToFreeze);
-        }
-
-        public void FreezeEveryFifteenBlocks()
-        {
-            if (_allBlocCount % 5 == 0 && Blocs.Count >= 3)
-            {
-                Debug.Log("FREEZEeeeeeeeeeeeee BLOCKS");
-                List<Bloc> blocsToFreeze = Blocs.GetRange(Blocs.Count - 3, 3);
-                cubeSpawner.FreezeCubes(blocsToFreeze);
-            }
+            _eventTreshold += 15;
         }
 
         public void DestroyStackedIdenticalBlocks()
         {
             List<Bloc> blocsToRemove = new List<Bloc>();
 
-            for (int i = 0; i < Blocs.Count - 2; i++)
+            for (int i = 0; i < Blocs.Count; i++)
             {
                 Bloc currentBloc = Blocs[i];
-                Bloc nextBloc = Blocs[i + 1];
-                Bloc nextNextBloc = Blocs[i + 2];
-
-                if (currentBloc.Shape == nextBloc.Shape && nextBloc.Shape == nextNextBloc.Shape)
+                if (currentBloc.CompareTag("Solid"))
                 {
-                    blocsToRemove.Add(currentBloc);
-                    blocsToRemove.Add(nextBloc);
-                    blocsToRemove.Add(nextNextBloc);
+                    List<Bloc> adjacentBlocs = GetAdjacentSolidBlocs(currentBloc);
+                    if (adjacentBlocs.Count >= 2)
+                    {
+                        bool allSameShape = true;
+                        string blocShape = currentBloc.Shape;
+
+                        foreach (Bloc adjacentBloc in adjacentBlocs)
+                        {
+                            if (adjacentBloc.Shape != blocShape)
+                            {
+                                allSameShape = false;
+                                break;
+                            }
+                        }
+
+                        if (allSameShape)
+                        {
+                            blocsToRemove.Add(currentBloc);
+                            blocsToRemove.AddRange(adjacentBlocs);
+                        }
+                    }
                 }
             }
 
@@ -475,6 +466,26 @@ namespace Elias.Scripts.Managers
                 RemoveBloc(bloc);
                 Destroy(bloc.gameObject);
             }
+        }
+
+        private List<Bloc> GetAdjacentSolidBlocs(Bloc bloc)
+        {
+            List<Bloc> adjacentBlocs = new List<Bloc>();
+            Vector3 blocPosition = bloc.transform.position;
+
+            foreach (Bloc otherBloc in Blocs)
+            {
+                if (otherBloc != bloc && otherBloc.CompareTag("Solid"))
+                {
+                    Vector3 otherBlocPosition = otherBloc.transform.position;
+                    if (Vector3.Distance(blocPosition, otherBlocPosition) <= 1.5f) // Adjust the distance threshold as needed
+                    {
+                        adjacentBlocs.Add(otherBloc);
+                    }
+                }
+            }
+
+            return adjacentBlocs;
         }
     }
 }

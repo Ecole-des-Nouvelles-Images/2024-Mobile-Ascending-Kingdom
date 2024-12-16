@@ -24,6 +24,19 @@ namespace Proto.Script
         public bool AutoStart;
         
         public bool isPaused = false;
+        
+        private List<Color> dullColors = new List<Color>
+        {
+            new Color(1f, 0.7f, 0.7f), // Light Reddish Gray
+            new Color(0.7f, 1f, 0.7f), // Light Greenish Gray
+            new Color(0.7f, 0.7f, 1f), // Light Cyan Gray
+            new Color(1f, 1f, 0.7f), // Light Orange Gray
+            new Color(1f, 0.7f, 1f), // Light Purple Gray
+            new Color(0.7f, 1f, 1f),
+            new Color(1f, 1f, 1f), // Light Lime Gray
+            new Color(0.75f, 0.8f, 0.7f)  // Light Spring Green Gray
+        };
+
 
         // Liste des offsets en fonction du nom de la pièce et de sa rotation
         public Dictionary<string, Dictionary<float, Vector3>> offsets = new Dictionary<string, Dictionary<float, Vector3>>()
@@ -154,8 +167,9 @@ namespace Proto.Script
                     GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
 
                     lastCube = newCube.GetComponent<Bloc>();
-                    newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f),
-                        Random.Range(0f, 1f), Random.Range(0f, 1f));
+
+                    // Set a random color from the brightColors list
+                    newCube.GetComponent<MeshRenderer>().material.color = dullColors[Random.Range(0, dullColors.Count)];
 
                     GameManager.Instance.AddBloc(newCube.GetComponent<Bloc>());
                     newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
@@ -173,6 +187,7 @@ namespace Proto.Script
                 SpawnCube = false;
             }
         }
+
 
         public void GoRight()
         {
@@ -204,7 +219,10 @@ namespace Proto.Script
             Indicator.transform.position = new Vector3(0,0,0f);
             GameObject newCube = Instantiate(cubeModels[Random.Range(0, cubeModels.Count)], transform.position, Quaternion.identity, this.transform);
             lastCube = newCube.GetComponent<Bloc>();
-            newCube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+
+            // Set a random color from the brightColors list
+            newCube.GetComponent<MeshRenderer>().material.color = dullColors[Random.Range(0, dullColors.Count)];
+
             GameManager.Instance.AddBloc(newCube.GetComponent<Bloc>());
             newCube.GetComponent<MeshRenderer>().material.DisableKeyword("_ISFREEZED");
             Bounds bounds = newCube.GetComponent<MeshRenderer>().bounds;
@@ -218,6 +236,7 @@ namespace Proto.Script
 
             transform.position = new Vector3(transform.position.x,transform.position.y, transform.position.z);
         }
+
 
         [ContextMenu("Freeze Cube")]
         public void FreezeMethod()
@@ -248,7 +267,7 @@ namespace Proto.Script
         {
             string cubeName = newCube.Shape;
             float rotationX = QuaternionToEulerAngles(newCube.transform.rotation).x;
-            Debug.Log(QuaternionToEulerAngles(newCube.transform.rotation).x);
+            //Debug.Log(QuaternionToEulerAngles(newCube.transform.rotation).x);
 
             if (offsets.ContainsKey(cubeName) && offsets[cubeName].ContainsKey(rotationX))
             {
