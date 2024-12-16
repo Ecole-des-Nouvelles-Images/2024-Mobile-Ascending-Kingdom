@@ -585,6 +585,7 @@ MonoBehaviour:
   lastCube: {fileID: 0}
   Indicator: {fileID: 301229595}
   AutoStart: 1
+  isPaused: 0
 --- !u!114 &1128565146
 MonoBehaviour:
   m_ObjectHideFlags: 0

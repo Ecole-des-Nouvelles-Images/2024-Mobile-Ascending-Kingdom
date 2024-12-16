@@ -45,7 +45,9 @@ namespace Proto.Script
                 "I", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0.5f) },
+                    { 90.00002f, new Vector3(0, 0, 0f) },
                     { 90.00001f, new Vector3(0, 0, 0f) },
+                    { 90f, new Vector3(0, 0, 0f) },
                     { 89.99999f, new Vector3(0, 0, 0f) },
                     { 180f, new Vector3(0,0,-0.5f)},
                     { 270f, new Vector3(0,0,0)},
@@ -56,7 +58,9 @@ namespace Proto.Script
                 "Ialt", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0f) },
+                    { 90.00002f, new Vector3(0, 0, 0.5f) },
                     { 90.00001f, new Vector3(0, 0, 0.5f) },
+                    { 90f, new Vector3(0, 0, 0.5f) },
                     { 89.99999f, new Vector3(0, 0, 0.5f) },
                     { 180f, new Vector3(0,0,0f)},
                     { 270f, new Vector3(0,0,-0.5f)},
@@ -67,7 +71,9 @@ namespace Proto.Script
                 "O", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0.5f) },
+                    { 90.00002f, new Vector3(0, 0, 0.5f) },
                     { 90.00001f, new Vector3(0, 0, 0.5f) },
+                    { 90f, new Vector3(0, 0, 0.5f) },
                     { 89.99999f, new Vector3(0, 0, 0.5f) },
                     { 180f, new Vector3(0,0,-0.5f)},
                     { 270f, new Vector3(0,0,-0.5f)},
@@ -78,7 +84,9 @@ namespace Proto.Script
                 "Zalt", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0f) },
+                    { 90.00002f, new Vector3(0, 0, -0.5f) },
                     { 90.00001f, new Vector3(0, 0, -0.5f) },
+                    { 90f, new Vector3(0, 0, -0.5f) },
                     { 89.99999f, new Vector3(0, 0, -0.5f) },
                     { 180f, new Vector3(0,0,0f)},
                     { 270f, new Vector3(0,0,0.5f)},
@@ -89,7 +97,9 @@ namespace Proto.Script
                 "Z", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, -0.5f) },
+                    { 90.00002f, new Vector3(0, 0, 0f) },
                     { 90.00001f, new Vector3(0, 0, 0f) },
+                    { 90f, new Vector3(0, 0, 0f) },
                     { 89.99999f, new Vector3(0, 0, 0f) },
                     { 180f, new Vector3(0,0,0.5f)},
                     { 270f, new Vector3(0,0,0f)},
@@ -100,7 +110,9 @@ namespace Proto.Script
                 "Lalt", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0f) },
+                    { 90.00002f, new Vector3(0, 0, 0.5f) },
                     { 90.00001f, new Vector3(0, 0, 0.5f) },
+                    { 90f, new Vector3(0, 0, 0.5f) },
                     { 89.99999f, new Vector3(0, 0, 0.5f) },
                     { 180f, new Vector3(0,0,0f)},
                     { 270f, new Vector3(0,0,-0.5f)},
@@ -111,7 +123,9 @@ namespace Proto.Script
                 "L", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0.5f) },
+                    { 90.00002f, new Vector3(0, 0, 0f) },
                     { 90.00001f, new Vector3(0, 0, 0f) },
+                    { 90f, new Vector3(0, 0, 0f) },
                     { 89.99999f, new Vector3(0, 0, 0f) },
                     { 180f, new Vector3(0,0,-0.5f)},
                     { 270f, new Vector3(0,0,0f)},
@@ -122,7 +136,9 @@ namespace Proto.Script
                 "T", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0f) },
+                    { 90.00002f, new Vector3(0, 0, -0.5f) },
                     { 90.00001f, new Vector3(0, 0, -0.5f) },
+                    { 90f, new Vector3(0, 0, -0.5f) },
                     { 89.99999f, new Vector3(0, 0, -0.5f) },
                     { 180f, new Vector3(0,0,0f)},
                     { 270f, new Vector3(0,0,0.5f)},
@@ -133,7 +149,9 @@ namespace Proto.Script
                 "Talt", new Dictionary<float, Vector3>()
                 {
                     { 0f, new Vector3(0, 0, 0.5f) },
+                    { 90.00002f, new Vector3(0, 0, 0f) },
                     { 90.00001f, new Vector3(0, 0, 0f) },
+                    { 90f, new Vector3(0, 0, 0f) },
                     { 89.99999f, new Vector3(0, 0, 0f) },
                     { 180f, new Vector3(0,0,-0.5f)},
                     { 270f, new Vector3(0,0,0f)},
@@ -267,7 +285,7 @@ namespace Proto.Script
         {
             string cubeName = newCube.Shape;
             float rotationX = QuaternionToEulerAngles(newCube.transform.rotation).x;
-            //Debug.Log(QuaternionToEulerAngles(newCube.transform.rotation).x);
+            Debug.Log(QuaternionToEulerAngles(newCube.transform.rotation).x);
 
             if (offsets.ContainsKey(cubeName) && offsets[cubeName].ContainsKey(rotationX))
             {
