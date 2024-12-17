@@ -89,7 +89,7 @@ public class Bloc : MonoBehaviour
         Bounds bounds = _meshRenderer.bounds;
         Vector3 lowestPoint = bounds.min;
         GameObject dustGo = Instantiate(Dust,new Vector3(transform.position.x,lowestPoint.y,transform.position.z), Quaternion.identity, null);
-        _cameraShake.StartShake();
+        
         StartCoroutine(DustDestroyer(dustGo));
         
     }

@@ -395,10 +395,18 @@ namespace Elias.Scripts.Managers
 
             Debug.Log("new phase treshold" + _currentPhaseTreshold);
 
-            cubeSpawner.FreezeCubes(Blocs);
+            // Create a new list that excludes the most recently added block
+            var blocksToFreeze = new List<Bloc>(Blocs);
+            if (blocksToFreeze.Count > 1)
+            {
+                blocksToFreeze.RemoveAt(blocksToFreeze.Count - 1); // Remove the last block
+            }
+
+            cubeSpawner.FreezeCubes(blocksToFreeze);
 
             ChangeBackgroundAndEvent();
         }
+
         
         private void InitializeBackgroundSequence()
         {
