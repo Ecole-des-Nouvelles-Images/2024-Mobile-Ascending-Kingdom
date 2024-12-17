@@ -20,11 +20,11 @@ namespace Elias.Scripts.Managers
         private float _height = 0;
         private int _score = 0;
         private int _allBlocCount = 0;
-        private int _eventTreshold = 25;
+        private int _eventTreshold = 15;
 
         private float _initialHeightTreshold = 8f;
-        private float _initiaScoretreshold = 5f;
-        private float _initiaPhaseTreshold = 10f;
+        private float _initiaScoretreshold = 12f;
+        private float _initiaPhaseTreshold = 20f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
