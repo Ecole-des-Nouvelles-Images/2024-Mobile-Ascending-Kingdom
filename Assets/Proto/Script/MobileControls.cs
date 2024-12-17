@@ -191,7 +191,7 @@ public class MobileControls : MonoBehaviour
             //cubeSpawner.Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
             //cubeSpawner.Indicator.transform.localPosition = new Vector3(cubeTransform.localPosition.x, 0, 0);
             cubeSpawner.UpdateIndicatorSize(lengthZ);
-            cubeSpawner.ApplyOffset(cubeTransform.GetComponent<Bloc>());
+            cubeSpawner.ApplyOffset(cubeSpawner.lastCube.GetComponent<Bloc>());
         }
         Debug.Log("Tap Method Executed");
     }
