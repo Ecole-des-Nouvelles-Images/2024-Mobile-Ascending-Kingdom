@@ -3377,11 +3377,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 91d2bdff58ecd9947ba4d4a57740bee1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4517,8 +4517,8 @@ MonoBehaviour:
   musicSource: {fileID: 1246829554}
   ambientSource: {fileID: 1042387373}
   vfxSource: {fileID: 667007465}
-  mainMenuMusic: {fileID: 0}
-  gameMusic: {fileID: 0}
+  mainMenuMusic: {fileID: 8300000, guid: 91d2bdff58ecd9947ba4d4a57740bee1, type: 3}
+  gameMusic: {fileID: 8300000, guid: 91d2bdff58ecd9947ba4d4a57740bee1, type: 3}
   blocPlaced: {fileID: 0}
 --- !u!1 &1724579856
 GameObject:
