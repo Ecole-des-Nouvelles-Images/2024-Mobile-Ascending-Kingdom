@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Elias.Scripts.Camera;
 using Elias.Scripts.Managers;
 using Elias.Scripts.UIs;
 using Proto.Script;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class Bloc : MonoBehaviour
 {
@@ -19,6 +17,9 @@ public class Bloc : MonoBehaviour
     [FormerlySerializedAs("shape")] public string Shape;
     public GameObject Vines;
     public GameObject Dust;
+    public bool IsFrozen { get; set; } // Add this property
+
+    private CameraShake _cameraShake;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class Bloc : MonoBehaviour
         Rigidbody.useGravity = false;
         _meshRenderer = GetComponent<MeshRenderer>();
         _cubeSpawner = FindObjectOfType<CubeSpawner>();
+        _cameraShake = FindObjectOfType<CameraShake>();
     }
 
     private void FixedUpdate()
@@ -55,11 +57,12 @@ public class Bloc : MonoBehaviour
 
     private void FreezeObject()
     {
-        Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        Rigidbody.useGravity = false;
+        //Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        Rigidbody.isKinematic = true;
         SetShaderBool("_ISFREEZED");
         StartCoroutine("FreezeAnimation");
         Freeze = false;
+        IsFrozen = true; // Set the IsFrozen property to true
     }
 
     private void SetShaderBool(string propertyName)
@@ -70,9 +73,9 @@ public class Bloc : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (!other.gameObject.CompareTag("Solid") || gameObject.CompareTag("Solid")) return;
-        
+
         AudioManager.Instance.PlaySound(AudioManager.Instance.blocPlaced);
-        
+
         Rigidbody.velocity = Vector3.zero;
         transform.tag = "Solid";
         Rigidbody.useGravity = true;
@@ -86,7 +89,9 @@ public class Bloc : MonoBehaviour
         Bounds bounds = _meshRenderer.bounds;
         Vector3 lowestPoint = bounds.min;
         GameObject dustGo = Instantiate(Dust,new Vector3(transform.position.x,lowestPoint.y,transform.position.z), Quaternion.identity, null);
+        _cameraShake.StartShake();
         StartCoroutine(DustDestroyer(dustGo));
+        
     }
 
     private void OnParticleCollision(GameObject other)
@@ -139,5 +144,4 @@ public class Bloc : MonoBehaviour
         yield return new WaitForSeconds(2f);
         DestroyImmediate(dustGameObject);
     }
-
 }

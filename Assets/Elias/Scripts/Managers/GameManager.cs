@@ -20,17 +20,19 @@ namespace Elias.Scripts.Managers
         private float _height = 0;
         private int _score = 0;
         private int _allBlocCount = 0;
-        private int _eventTreshold = 15;
+        private int _eventTreshold = 25;
 
-        private float _initialHeightTreshold = 15f;
+        private float _initialHeightTreshold = 8f;
         private float _initiaScoretreshold = 5f;
-        private float _initiaPhaseTreshold = 50f;
+        private float _initiaPhaseTreshold = 10f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
         private float _currentPhaseTreshold;
 
         public GameObject cardPanel;
+        public GameObject gamePanel;
+        
         private List<CardSO> _deckCards = new List<CardSO>();
         private List<CardSO> _poolCards = new List<CardSO>();
         private List<CardSO> _displayedCards = new List<CardSO>();
@@ -96,6 +98,7 @@ namespace Elias.Scripts.Managers
         private void Awake()
         {
             cardPanel = GameObject.FindGameObjectWithTag("CardPanel");
+            gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
         }
 
         private void Start()
@@ -117,10 +120,12 @@ namespace Elias.Scripts.Managers
 
             _allEvents = new List<EventSO>
             {
-                BlizzardEvent,
                 TempestEvent,
                 VolcanoEvent,
                 WindEvent,
+                BlizzardEvent,
+                
+                
                 
             };
 
@@ -140,6 +145,7 @@ namespace Elias.Scripts.Managers
             }
 
             cardPanel.SetActive(false);
+            gamePanel.SetActive(true);
             InitializeBackgroundSequence();
         }
 
@@ -237,6 +243,7 @@ namespace Elias.Scripts.Managers
             Debug.Log("Card triggered");
             
             cardPanel.SetActive(true);
+            gamePanel.SetActive(false);
 
             _currentHeightTreshold = (_currentHeightTreshold + (_initialHeightTreshold * 1.1f));
             _currentScoreTreshold = (_currentScoreTreshold + (_initiaScoretreshold * 1.1f));
@@ -341,6 +348,7 @@ namespace Elias.Scripts.Managers
             _isReplacingCard = false;
             cubeSpawner.isPaused = false;
             cardPanel.SetActive(false);
+            gamePanel.SetActive(true);
         }
 
         private void AddCardToDeck(CardSO card)
@@ -358,6 +366,7 @@ namespace Elias.Scripts.Managers
 
             cubeSpawner.isPaused = false;
             cardPanel.SetActive(false);
+            gamePanel.SetActive(true);
         }
 
         public void RemoveCardFromDeck(CardSO card)
@@ -426,66 +435,6 @@ namespace Elias.Scripts.Managers
         public void ResetEventThreshold()
         {
             _eventTreshold += 15;
-        }
-
-        public void DestroyStackedIdenticalBlocks()
-        {
-            List<Bloc> blocsToRemove = new List<Bloc>();
-
-            for (int i = 0; i < Blocs.Count; i++)
-            {
-                Bloc currentBloc = Blocs[i];
-                if (currentBloc.CompareTag("Solid"))
-                {
-                    List<Bloc> adjacentBlocs = GetAdjacentSolidBlocs(currentBloc);
-                    if (adjacentBlocs.Count >= 2)
-                    {
-                        bool allSameShape = true;
-                        string blocShape = currentBloc.Shape;
-
-                        foreach (Bloc adjacentBloc in adjacentBlocs)
-                        {
-                            if (adjacentBloc.Shape != blocShape)
-                            {
-                                allSameShape = false;
-                                break;
-                            }
-                        }
-
-                        if (allSameShape)
-                        {
-                            blocsToRemove.Add(currentBloc);
-                            blocsToRemove.AddRange(adjacentBlocs);
-                        }
-                    }
-                }
-            }
-
-            foreach (Bloc bloc in blocsToRemove)
-            {
-                RemoveBloc(bloc);
-                Destroy(bloc.gameObject);
-            }
-        }
-
-        private List<Bloc> GetAdjacentSolidBlocs(Bloc bloc)
-        {
-            List<Bloc> adjacentBlocs = new List<Bloc>();
-            Vector3 blocPosition = bloc.transform.position;
-
-            foreach (Bloc otherBloc in Blocs)
-            {
-                if (otherBloc != bloc && otherBloc.CompareTag("Solid"))
-                {
-                    Vector3 otherBlocPosition = otherBloc.transform.position;
-                    if (Vector3.Distance(blocPosition, otherBlocPosition) <= 1.5f) // Adjust the distance threshold as needed
-                    {
-                        adjacentBlocs.Add(otherBloc);
-                    }
-                }
-            }
-
-            return adjacentBlocs;
         }
     }
 }
