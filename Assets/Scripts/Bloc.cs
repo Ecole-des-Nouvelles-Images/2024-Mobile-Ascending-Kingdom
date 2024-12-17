@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Elias.Scripts.Camera;
 using Elias.Scripts.Managers;
 using Elias.Scripts.UIs;
@@ -17,7 +18,8 @@ public class Bloc : MonoBehaviour
     [FormerlySerializedAs("shape")] public string Shape;
     public GameObject Vines;
     public GameObject Dust;
-    public bool IsFrozen { get; set; } // Add this property
+    public bool IsFrozen { get; set; }
+    public List<Bloc> AdjacentBlocs = new List<Bloc>(); // Add this list
 
     private CameraShake _cameraShake;
 
@@ -57,12 +59,11 @@ public class Bloc : MonoBehaviour
 
     private void FreezeObject()
     {
-        //Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         Rigidbody.isKinematic = true;
         SetShaderBool("_ISFREEZED");
         StartCoroutine("FreezeAnimation");
         Freeze = false;
-        IsFrozen = true; // Set the IsFrozen property to true
+        IsFrozen = true;
     }
 
     private void SetShaderBool(string propertyName)
@@ -88,10 +89,31 @@ public class Bloc : MonoBehaviour
         spawner.SpawnCubeMethod();
         Bounds bounds = _meshRenderer.bounds;
         Vector3 lowestPoint = bounds.min;
-        GameObject dustGo = Instantiate(Dust,new Vector3(transform.position.x,lowestPoint.y,transform.position.z), Quaternion.identity, null);
-        
+        GameObject dustGo = Instantiate(Dust, new Vector3(transform.position.x, lowestPoint.y, transform.position.z), Quaternion.identity, null);
+
         StartCoroutine(DustDestroyer(dustGo));
-        
+        _cameraShake.StartShake();
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Bloc otherBloc = collision.gameObject.GetComponent<Bloc>();
+        if (otherBloc != null && otherBloc != this && otherBloc.CompareTag("Solid") && !otherBloc.IsFrozen)
+        {
+            if (!AdjacentBlocs.Contains(otherBloc))
+            {
+                AdjacentBlocs.Add(otherBloc);
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Bloc otherBloc = collision.gameObject.GetComponent<Bloc>();
+        if (otherBloc != null && AdjacentBlocs.Contains(otherBloc))
+        {
+            AdjacentBlocs.Remove(otherBloc);
+        }
     }
 
     private void OnParticleCollision(GameObject other)
@@ -113,6 +135,7 @@ public class Bloc : MonoBehaviour
             }
         }
     }
+
     private IEnumerator FreezeAnimation()
     {
         float vineAmountStep = 0.1f;
