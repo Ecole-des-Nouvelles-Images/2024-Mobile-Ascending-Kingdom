@@ -34,7 +34,7 @@ namespace Elias.Scripts.Cards
         private void OnEnable()
         {
             cardName = "L'Empereur";
-            cardDescription = "Fait pousser des lierres toutes les 20 pièces.";
+            cardDescription = "Fait pousser des lierres toutes les 15 pièces.";
         }
 
         public override void OnBlocListUpdated()
@@ -48,9 +48,10 @@ namespace Elias.Scripts.Cards
         private void FreezeAdjacentBlocksEveryTwenty()
         {
             int totalBlocs = GameManager.Instance.GetBlocCount();
-            if (totalBlocs > 0 && totalBlocs % 20 == 0)
+            Debug.Log(totalBlocs);
+            if (totalBlocs > 0 && totalBlocs % 15 == 0)
             {
-                Bloc lastBloc = GameManager.Instance.Blocs[^1];
+                Bloc lastBloc = GameManager.Instance.Blocs[^2];
                 if (lastBloc != null && lastBloc.CompareTag("Solid"))
                 {
                     List<Bloc> adjacentBlocs = GetAdjacentSolidBlocs(lastBloc);
@@ -65,15 +66,15 @@ namespace Elias.Scripts.Cards
             List<Bloc> adjacentBlocs = new List<Bloc>();
             Vector3 blocPosition = bloc.transform.position;
 
-            foreach (Bloc otherBloc in GameManager.Instance.Blocs)
+            // Use Physics.OverlapSphere to detect nearby colliders
+            Collider[] colliders = Physics.OverlapSphere(blocPosition, 1.5f);
+
+            foreach (Collider collider in colliders)
             {
-                if (otherBloc != bloc && otherBloc.CompareTag("Solid"))
+                Bloc otherBloc = collider.GetComponent<Bloc>();
+                if (otherBloc != null && otherBloc != bloc && otherBloc.CompareTag("Solid"))
                 {
-                    Vector3 otherBlocPosition = otherBloc.transform.position;
-                    if (Vector3.Distance(blocPosition, otherBlocPosition) <= 1.5f) // Adjust the distance threshold as needed
-                    {
-                        adjacentBlocs.Add(otherBloc);
-                    }
+                    adjacentBlocs.Add(otherBloc);
                 }
             }
 

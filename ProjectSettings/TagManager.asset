@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Solid
   - CardPanel
+  - GamePanel
   layers:
   - Default
   - TransparentFX
