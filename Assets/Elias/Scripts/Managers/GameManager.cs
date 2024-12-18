@@ -24,7 +24,7 @@ namespace Elias.Scripts.Managers
 
         private float _initialHeightTreshold = 8f;
         private float _initiaScoretreshold = 12f;
-        private float _initiaPhaseTreshold = 20f;
+        private float _initiaPhaseTreshold = 15f;
 
         private float _currentHeightTreshold;
         private float _currentScoreTreshold;
