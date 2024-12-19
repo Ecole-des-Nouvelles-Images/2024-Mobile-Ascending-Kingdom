@@ -349,7 +349,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bd7971957ba8eaa4ca587aab302d2907, type: 2}
+  - {fileID: 2100000, guid: b42b2d0f5bc9e8c45b8ea109f8ec0cbf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -459,3 +459,4 @@ MonoBehaviour:
   Shape: Z
   Vines: {fileID: 1754617976509865272}
   Dust: {fileID: 8196892160367364442, guid: 5f3841426f97ce142ab4e67bd4de6839, type: 3}
+  AdjacentBlocs: []

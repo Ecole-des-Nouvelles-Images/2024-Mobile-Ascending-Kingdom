@@ -1901,7 +1901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3000, y: 3400}
+  m_AnchoredPosition: {x: -4300, y: 3400}
   m_SizeDelta: {x: 2048, y: 8192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &700123973
@@ -5678,7 +5678,7 @@ MonoBehaviour:
   vfxSource: {fileID: 802493561270407909}
   mainMenuMusic: {fileID: 8300000, guid: 91d2bdff58ecd9947ba4d4a57740bee1, type: 3}
   gameMusic: {fileID: 8300000, guid: 91d2bdff58ecd9947ba4d4a57740bee1, type: 3}
-  blocPlaced: {fileID: 0}
+  blocPlaced: {fileID: 8300000, guid: 1210e49e51efa2144b92a1df14cf1967, type: 3}
 --- !u!222 &3042437819092663462
 CanvasRenderer:
   m_ObjectHideFlags: 0

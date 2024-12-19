@@ -27,14 +27,14 @@ namespace Proto.Script
         
         private List<Color> dullColors = new List<Color>
         {
-            new Color(1f, 0.7f, 0.7f), // Light Reddish Gray
-            new Color(0.7f, 1f, 0.7f), // Light Greenish Gray
-            new Color(0.7f, 0.7f, 1f), // Light Cyan Gray
-            new Color(1f, 1f, 0.7f), // Light Orange Gray
-            new Color(1f, 0.7f, 1f), // Light Purple Gray
-            new Color(0.7f, 1f, 1f),
+            new Color(1f, 0.6f, 0.6f), // Light Reddish Gray
+            new Color(0.6f, 1f, 0.6f), // Light Greenish Gray
+            new Color(0.6f, 0.6f, 1f), // Light Cyan Gray
+            new Color(1f, 1f, 0.6f), // Light Orange Gray
+            new Color(1f, 0.6f, 1f), // Light Purple Gray
+            new Color(0.6f, 1f, 1f),
             new Color(1f, 1f, 1f), // Light Lime Gray
-            new Color(0.75f, 0.8f, 0.7f)  // Light Spring Green Gray
+            new Color(0.6f, 0.6f, 0.6f)  // Light Spring Green Gray
         };
 
 

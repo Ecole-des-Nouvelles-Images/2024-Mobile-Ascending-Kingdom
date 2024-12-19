@@ -17,14 +17,16 @@ namespace Elias.Scripts.UIs
         }
         public void GameMenu()
         {
-            GameManager.Instance.cubeSpawner.isPaused = true;
+            
             menuPanel.SetActive(true);
+            GameManager.Instance.cubeSpawner.isPaused = true;
         }
 
         public void Resume()
         {
-            GameManager.Instance.cubeSpawner.isPaused = false;
             menuPanel.SetActive(false);
+            
+            GameManager.Instance.cubeSpawner.isPaused = false;
         }
         
         public void Restart()
