@@ -182,31 +182,6 @@ namespace Proto.Script
             }
         }
 
-
-        public void GoRight()
-        {
-            if (lastCube != null)
-            {
-                lastCube.transform.position += new Vector3(0, 0, 1);
-            }
-        }
-
-        public void GoLeft()
-        {
-            if (lastCube != null)
-            {
-                lastCube.transform.position -= new Vector3(0, 0, 1);
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            /*if (CubeCount == CubeLimit)
-            {
-                FreezeCubes();
-            }*/
-        }
-
         [ContextMenu("Spawn Cube")]
         public void SpawnCubeMethod()
         {

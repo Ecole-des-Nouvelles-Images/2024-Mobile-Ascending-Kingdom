@@ -6,12 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 308954126a413ce4281343e50eecafe3
+    path: Assets/Elias/Scenes/Elias_Menu.unity
+    guid: 1358b80b0397ef64aabfd3e0b5f012fe
   - enabled: 1
     path: Assets/Elias/Scenes/Elias_Game.unity
     guid: fd35b763955446345b17ebe0cf1cc7de
-  - enabled: 1
-    path: Assets/Elias/Scenes/Elias_Menu.unity
-    guid: 1358b80b0397ef64aabfd3e0b5f012fe
   m_configObjects: {}

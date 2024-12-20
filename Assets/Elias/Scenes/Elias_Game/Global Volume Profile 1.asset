@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db2e29da2e2f4143b5d3bad61ec3867b, type: 3}
-  m_Name: Volcano
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Global Volume Profile 1
   m_EditorClassIdentifier: 
-  eventName: Volcano
-  eventBackground: {fileID: 21300000, guid: deaf11fedd191df41a46cc7ab9b65192, type: 3}
-  eventSound: {fileID: 0}
-  shader: {fileID: 0}
-  eventBlockDuration: 0
+  components: []

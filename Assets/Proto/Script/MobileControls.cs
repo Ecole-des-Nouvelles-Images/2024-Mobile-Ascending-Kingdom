@@ -95,7 +95,6 @@ public class MobileControls : MonoBehaviour
     {
         if (currentTouchPosition.y < startTouchPosition.y - 350) // Threshold a ajuster
         {
-//            Debug.Log("Swipe Down Detected");
             SwipeDownMethod();
             isSwiping = false;
             isSliding = false;
@@ -176,20 +175,6 @@ public class MobileControls : MonoBehaviour
             cubeTransform.rotation *= rotation;
             Bounds bounds = cubeTransform.GetComponent<MeshRenderer>().bounds;
             float lengthZ = bounds.size.z;
-            /*Vector3 currentRotation = cubeTransform.rotation.eulerAngles;
-            if (currentRotation.x < 360) {
-                currentRotation.x += 90;      
-            }
-            else
-            {
-                currentRotation.x = 0;
-            }
-            // Appliquer la rotation à l'objet
-            cubeTransform.rotation = Quaternion.Euler(currentRotation);
-            Bounds bounds = cubeTransform.GetComponent<MeshRenderer>().bounds;
-            float lengthZ = bounds.size.z;*/
-            //cubeSpawner.Indicator.transform.localScale = new Vector3(lengthZ, 200, lengthZ);
-            //cubeSpawner.Indicator.transform.localPosition = new Vector3(cubeTransform.localPosition.x, 0, 0);
             cubeSpawner.UpdateIndicatorSize(lengthZ);
             cubeSpawner.ApplyOffset(cubeSpawner.lastCube.GetComponent<Bloc>());
         }
