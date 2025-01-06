@@ -358,6 +358,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundSegment (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2227,6 +2232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundSegment (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3478,6 +3488,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundSegment (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3786,6 +3801,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1329619670}
+  - component: {fileID: 1329619674}
   - component: {fileID: 1329619671}
   - component: {fileID: 1329619673}
   - component: {fileID: 1329619672}
@@ -3873,6 +3889,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69827eb7999d69429a60293593a3668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1329619674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329619669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31bed7aa4c141c4692bb37c91f9c916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundPrefab: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+    type: 3}
+  mainCamera: {fileID: 1052825952}
+  initialSegments: 3
+  startTile: {fileID: 21300000, guid: a513c413e009dd941ac048a5e8ea9350, type: 3}
+  moonTile: {fileID: 21300000, guid: f857a2f2a9456474c96bc5522ecbe39e, type: 3}
+  transitionTile: {fileID: 21300000, guid: 11048717a4d75d0458a4d593170795cb, type: 3}
+  skyTile: {fileID: 21300000, guid: bd77831a4d43d8e42b4924cf8ce6fa3f, type: 3}
+  nightTile: {fileID: 21300000, guid: 0be35539035f35e45baee88d6f3830ba, type: 3}
 --- !u!1 &1334196546
 GameObject:
   m_ObjectHideFlags: 0
@@ -4391,6 +4428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BackgroundSegment (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5551,6 +5593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BackgroundSegment
+      objectReference: {fileID: 0}
+    - target: {fileID: 9080840691833801707, guid: 69bdd90bea286624ba7c79377697e0c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

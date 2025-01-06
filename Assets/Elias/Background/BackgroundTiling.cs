@@ -1,54 +1,102 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Elias.Background
 {
-    public class BackgroundTiling : MonoBehaviour
+    public class InfiniteBackground : MonoBehaviour
     {
         public GameObject backgroundPrefab;
         public Camera mainCamera;
-        public float offset = 0.1f;
-        private float _segmentHeight;
-        private float _nextSpawnY;
-        
-        [SerializeField] private Sprite[] _backgroundSprites;
+        public int initialSegments = 5;
+
+        public Sprite startTile; // Sprite pour le début
+        public Sprite moonTile; // Sprite pour la lune
+        public Sprite transitionTile; // Sprite pour la transition
+        public Sprite skyTile; // Sprite répétable (ciel)
+        public Sprite nightTile; // Sprite répétable (nuit)
+
+        private float _segmentHeight = 24f;
+        private Queue<GameObject> _activeSegments;
+        private bool _moonAppeared = false;
+        private bool _transitionAppeared = false;
 
         void Start()
         {
-            if (backgroundPrefab == null || mainCamera == null)
+            if (backgroundPrefab == null || mainCamera == null || startTile == null || moonTile == null || 
+                transitionTile == null || skyTile == null || nightTile == null)
             {
-                Debug.LogError("Assurez-vous de lier le prefab et la caméra dans l'inspecteur !");
+                Debug.LogError("Assurez-vous de lier le prefab, la caméra et tous les sprites dans l'inspecteur !");
                 return;
             }
 
-            SpriteRenderer spriteRenderer = backgroundPrefab.GetComponent<SpriteRenderer>();
-            _segmentHeight = spriteRenderer.bounds.size.y;
+            _activeSegments = new Queue<GameObject>();
 
-            
-            _nextSpawnY = mainCamera.transform.position.y - mainCamera.orthographicSize;
-        
-            // Instancier initialement plusieurs segments pour couvrir l'écran
-            if (_nextSpawnY < mainCamera.transform.position.y + mainCamera.orthographicSize)
+            float startY = mainCamera.transform.position.y - mainCamera.orthographicSize;
+
+            for (int i = 0; i < initialSegments; i++)
             {
-                SpawnSegment(_nextSpawnY);
-                _nextSpawnY += _segmentHeight;
+                SpawnSegment(startY, i == 0 ? startTile : skyTile);
+                startY += _segmentHeight;
             }
         }
 
         void Update()
         {
-            float cameraTopY = mainCamera.transform.position.y + mainCamera.orthographicSize;
+            GameObject firstSegment = _activeSegments.Peek();
+            float segmentBottomY = firstSegment.transform.position.y + _segmentHeight;
 
-            if (cameraTopY >= _nextSpawnY - offset)
+            if (segmentBottomY < mainCamera.transform.position.y - mainCamera.orthographicSize)
             {
-                SpawnSegment(_nextSpawnY);
-                _nextSpawnY += _segmentHeight;
+                // Recycler le segment avec un nouveau sprite
+                float newY = _activeSegments.ToArray()[_activeSegments.Count - 1].transform.position.y + _segmentHeight;
+                Sprite nextSprite = GetNextSprite();
+                RecycleSegment(firstSegment, newY, nextSprite);
             }
         }
 
-        void SpawnSegment(float spawnY)
+        void SpawnSegment(float spawnY, Sprite sprite)
         {
-            Instantiate(backgroundPrefab, new Vector3(0, spawnY, 0), Quaternion.identity);
+            GameObject newSegment = Instantiate(backgroundPrefab, new Vector3(backgroundPrefab.transform.position.x, 
+                spawnY, backgroundPrefab.transform.position.z), backgroundPrefab.transform.rotation);
+
+            SpriteRenderer sRenderer = newSegment.GetComponent<SpriteRenderer>();
+            sRenderer.sprite = sprite;
+
+            _activeSegments.Enqueue(newSegment);
+        }
+
+        void RecycleSegment(GameObject segment, float newY, Sprite sprite)
+        {
+            segment.transform.position = new Vector3(backgroundPrefab.transform.position.x, 
+                newY, backgroundPrefab.transform.position.z);
+
+            SpriteRenderer sRenderer = segment.GetComponent<SpriteRenderer>();
+            sRenderer.sprite = sprite;
+
+            _activeSegments.Dequeue();
+            _activeSegments.Enqueue(segment);
+        }
+
+        Sprite GetNextSprite()
+        {
+            if (!_moonAppeared && Random.value < 0.5f)
+            {
+                _moonAppeared = true;
+                return moonTile;
+            }
+
+            if (!_transitionAppeared && _moonAppeared && Random.value < 0.25f)
+            {
+                _transitionAppeared = true;
+                return transitionTile;
+            }
+
+            if (_transitionAppeared)
+            {
+                return nightTile;
+            }
+
+            return skyTile;
         }
     }
 }

@@ -19,10 +19,12 @@ namespace Elias.Scripts.Cubes
             if (piece != null)
             {
                 GameManager.Instance.RemoveBloc(piece);
-
                 Destroy(other.gameObject);
-
                 _cubeSpawner.SpawnCube = true;
+            }
+            else if (other.CompareTag("Meteor"))
+            {
+                Destroy(other.gameObject);
             }
         }
     }
