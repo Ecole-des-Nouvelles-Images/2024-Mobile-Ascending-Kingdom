@@ -34,7 +34,7 @@ namespace Elias.Scripts.Managers
         public GameObject gamePanel;
         
         private List<CardSO> _deckCards = new List<CardSO>();
-        private List<CardSO> _poolCards = new List<CardSO>();
+        public List<CardSO> _poolCards = new List<CardSO>();
         private List<CardSO> _displayedCards = new List<CardSO>();
         private List<Button> _cardButtons = new List<Button>();
 
@@ -93,16 +93,28 @@ namespace Elias.Scripts.Managers
 
         public UnityAction OnHeightUpdated;
         public UnityAction OnScoreUpdated;
-
-
-        private void Awake()
-        {
-            cardPanel = GameObject.FindGameObjectWithTag("CardPanel");
-            gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
-        }
+        
+        
 
         private void Start()
         {
+            GameObject canvas = GameObject.Find("CVS_CardCanvas_00"); // Replace "Canvas" with your UI root name
+            if (canvas != null)
+            {
+                cardPanel = canvas.transform.Find("PN_CardChoices_00")?.gameObject;
+                if (cardPanel == null)
+                {
+                    Debug.LogError("CardPanel not found under Canvas!");
+                }
+            }
+            else
+            {
+                Debug.LogError("Canvas not found!");
+            }
+
+            
+            gamePanel = GameObject.FindGameObjectWithTag("GamePanel");
+            
             cubeSpawner = FindObjectOfType<CubeSpawner>();
             
             _currentHeightTreshold = _initialHeightTreshold;
@@ -117,16 +129,13 @@ namespace Elias.Scripts.Managers
                 Emperor,
                 Empress
             };
-
+            
             _allEvents = new List<EventSO>
             {
                 TempestEvent,
                 VolcanoEvent,
                 WindEvent,
                 BlizzardEvent,
-                
-                
-                
             };
 
             if (_allEvents.Count > 0)
@@ -135,16 +144,19 @@ namespace Elias.Scripts.Managers
             }
 
             _cardButtons = new List<Button>();
-            foreach (Transform child in cardPanel.transform)
+            if (cardPanel != null)
             {
-                Button button = child.GetComponent<Button>();
-                if (button != null)
+                foreach (Transform child in cardPanel.transform)
                 {
-                    _cardButtons.Add(button);
+                    Button button = child.GetComponent<Button>();
+                    if (button != null)
+                    {
+                        _cardButtons.Add(button);
+                    }
                 }
-            }
 
-            cardPanel.SetActive(false);
+                cardPanel.SetActive(false);
+            }
             gamePanel.SetActive(true);
             InitializeBackgroundSequence();
         }
@@ -444,5 +456,7 @@ namespace Elias.Scripts.Managers
         {
             _eventTreshold += 15;
         }
+        
+        
     }
 }

@@ -236,7 +236,6 @@ namespace Proto.Script
         {
             string cubeName = newCube.Shape;
             float rotationX = (int)QuaternionToEulerAngles(newCube.transform.rotation).x;
-            Debug.Log((int)QuaternionToEulerAngles(newCube.transform.rotation).x);
 
             if (offsets.ContainsKey(cubeName) && offsets[cubeName].ContainsKey(rotationX))
             {

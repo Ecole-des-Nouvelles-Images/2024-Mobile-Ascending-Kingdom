@@ -10,6 +10,11 @@ namespace Elias.Scripts.UIs
     {
         public GameObject menuPanel;
 
+        private void Start()
+        {
+            menuPanel.SetActive(false);
+        }
+
 
         public void StopGame()
         {
@@ -31,22 +36,6 @@ namespace Elias.Scripts.UIs
         public void Restart()
         {
             SceneManager.LoadScene("Elias_Game");
-        }
-        
-        private bool pauseCooldown = false;
-
-        public void TogglePause()
-        {
-            if (pauseCooldown) return;
-
-            GameManager.Instance.cubeSpawner.SetPauseState(!GameManager.Instance.cubeSpawner.isPaused);
-            pauseCooldown = true;
-            Invoke(nameof(ResetPauseCooldown), 0.3f); // 300ms delay
-        }
-
-        private void ResetPauseCooldown()
-        {
-            pauseCooldown = false;
         }
 
     }
