@@ -11,4 +11,5 @@ Created by 3 students in 3rd years of video game & realtime from the **École de
 - **Cyrielle Eschalier** : 2D Art / 3D art
 
 # Pitch
-Dans **Ascending Kingdom** vous devez empiler des briques pour construire la tour la plus haute possible. Il n'y a pas de victoire à proprement parler à part de battre son propre record. Les parties sont agrémentées par des **évènements aléatoires** ainsi qu'un système de **dons** qui peuvent à la fois être des bonus et des malus. 
+In **Ascending Kingdom** you must stack bricks and castle parts to build the tallest tower possible. There is no victory per se other than breaking your own record. The games are enhanced by **random events** as well as a system of **gifts** which can be both bonuses and penalties.
+
