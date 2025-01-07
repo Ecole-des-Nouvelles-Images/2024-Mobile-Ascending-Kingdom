@@ -272,6 +272,12 @@ namespace Proto.Script
             if (angle < 0) angle += 360; // Si l'angle est négatif, le convertir en positif
             return angle;
         }
+        
+        public void SetPauseState(bool state)
+        {
+            isPaused = state;
+            Debug.Log($"isPaused set to: {isPaused}");
+        }
     }
     
     

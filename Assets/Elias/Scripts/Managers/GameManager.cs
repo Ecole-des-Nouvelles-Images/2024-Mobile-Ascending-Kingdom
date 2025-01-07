@@ -239,7 +239,7 @@ namespace Elias.Scripts.Managers
 
         public void CardTrigger()
         {
-            cubeSpawner.isPaused = true;
+            cubeSpawner.SetPauseState(true);
             Debug.Log("Card triggered");
             
             cardPanel.SetActive(true);
@@ -346,7 +346,7 @@ namespace Elias.Scripts.Managers
             AddCardToDeck(_pendingCard);
             _pendingCard = null;
             _isReplacingCard = false;
-            cubeSpawner.isPaused = false;
+            cubeSpawner.SetPauseState(false);
             cardPanel.SetActive(false);
             gamePanel.SetActive(true);
         }
@@ -364,7 +364,7 @@ namespace Elias.Scripts.Managers
             }
             _displayedCards.Clear();
 
-            cubeSpawner.isPaused = false;
+            cubeSpawner.SetPauseState(false);
             cardPanel.SetActive(false);
             gamePanel.SetActive(true);
         }
