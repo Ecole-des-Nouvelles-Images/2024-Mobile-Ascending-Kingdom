@@ -236,7 +236,6 @@ namespace Proto.Script
         {
             string cubeName = newCube.Shape;
             float rotationX = (int)QuaternionToEulerAngles(newCube.transform.rotation).x;
-            Debug.Log((int)QuaternionToEulerAngles(newCube.transform.rotation).x);
 
             if (offsets.ContainsKey(cubeName) && offsets[cubeName].ContainsKey(rotationX))
             {
@@ -271,6 +270,12 @@ namespace Proto.Script
             angle = angle % 360; // Réduire l'angle dans la plage [-360, 360]
             if (angle < 0) angle += 360; // Si l'angle est négatif, le convertir en positif
             return angle;
+        }
+        
+        public void SetPauseState(bool state)
+        {
+            isPaused = state;
+            Debug.Log($"isPaused set to: {isPaused}");
         }
     }
     

@@ -10,6 +10,11 @@ namespace Elias.Scripts.UIs
     {
         public GameObject menuPanel;
 
+        private void Start()
+        {
+            menuPanel.SetActive(false);
+        }
+
 
         public void StopGame()
         {
@@ -17,21 +22,21 @@ namespace Elias.Scripts.UIs
         }
         public void GameMenu()
         {
-            
             menuPanel.SetActive(true);
-            GameManager.Instance.cubeSpawner.isPaused = true;
+            GameManager.Instance.cubeSpawner.SetPauseState(true);
         }
 
         public void Resume()
         {
             menuPanel.SetActive(false);
-            
-            GameManager.Instance.cubeSpawner.isPaused = false;
+            GameManager.Instance.cubeSpawner.SetPauseState(false);
         }
+
         
         public void Restart()
         {
             SceneManager.LoadScene("Elias_Game");
         }
+
     }
 }
